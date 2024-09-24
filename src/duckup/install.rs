@@ -6,8 +6,8 @@ use std::path::Path;
 ///
 /// # Arguments
 ///
-/// * `output_dir` - A string slice representing the path to the directory containing the DuckDB binary.
-/// * `install_dir` - A string slice representing the path to the directory where the DuckDB binary should be installed.
+/// * `output_dir` - A `Path` representing the path to the directory containing the DuckDB binary.
+/// * `install_dir` - A `Path` representing the path to the directory where the DuckDB binary should be installed.
 ///
 /// # Returns
 ///

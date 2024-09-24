@@ -8,7 +8,7 @@ use zip::read::ZipArchive;
 /// # Arguments
 ///
 /// * `file_path` - A `PathBuf` representing the path to the ZIP file.
-/// * `output_dir` - A string slice representing the path to the output directory.
+/// * `output_dir` - A `Path` representing the path to the output directory.
 ///
 /// # Returns
 ///
