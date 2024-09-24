@@ -65,7 +65,7 @@ fn main() -> Result<()> {
             .join(".local")
             .join("bin");
 
-        let _ = install_duckdb(temp_dir_str, &dest_path);
+        install_duckdb(temp_dir_str, &dest_path)?;
 
         println!(
             "DuckDB {} installed successfully in {}!",
