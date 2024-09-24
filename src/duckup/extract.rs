@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use std::fs::File;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use zip::read::ZipArchive;
 
 /// Extracts a ZIP file to the specified output directory.
@@ -13,7 +13,7 @@ use zip::read::ZipArchive;
 /// # Returns
 ///
 /// * `Result<()>` - An empty result if successful, or an error if extraction fails.
-pub fn extract_zip(file_path: PathBuf, output_dir: &str) -> Result<()> {
+pub fn extract_zip(file_path: PathBuf, output_dir: &Path) -> Result<()> {
     let file = File::open(file_path).context("Failed to open zip file")?;
     let mut archive = ZipArchive::new(file).context("Failed to read zip archive")?;
     archive

@@ -12,9 +12,11 @@ use std::path::Path;
 /// # Returns
 ///
 /// * `Result<()>` - An empty result if successful, or an error if the installation fails.
-pub fn install_duckdb(output_dir: &str, install_dir: &str) -> Result<()> {
-    let src = Path::new(output_dir).join("duckdb");
-    let dest_path = Path::new(install_dir).join("duckdb");
+pub fn install_duckdb(temp_unzip_dir: &Path, dest_path: &Path) -> Result<()> {
+    let src = Path::new(temp_unzip_dir).join("duckdb");
+    let dest_path = Path::new(dest_path).join("duckdb");
+
     fs::rename(src, dest_path).context("Failed to move DuckDB binary")?;
+
     Ok(())
 }

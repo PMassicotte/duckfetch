@@ -1,3 +1,5 @@
+use dirs::home_dir;
+
 use anyhow::{Context, Result};
 use clap::{command, Arg, Command};
 use duckup::duckup::{
@@ -49,15 +51,21 @@ fn main() -> Result<()> {
 
         let (downloaded_file, temp_dir) = download_duckdb(&requested_version)?;
 
-        let temp_dir_str = temp_dir
-            .path()
-            .to_str()
-            .context("Failed to convert temp_dir path to str")?;
+        let temp_dir_str = temp_dir.path();
 
         extract_zip(downloaded_file, temp_dir_str)?;
-        install_duckdb(temp_dir_str, "/usr/local/bin")?;
 
-        println!("DuckDB installed successfully!");
+        let dest_path = home_dir()
+            .context("Could not find the home directory")?
+            .join(".local")
+            .join("bin");
+
+        let _ = install_duckdb(temp_dir_str, &dest_path);
+
+        println!(
+            "DuckDB installed successfully in {}!",
+            dest_path.to_str().unwrap()
+        );
         return Ok(());
     }
 
