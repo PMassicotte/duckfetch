@@ -1,6 +1,9 @@
 # duckup: a DuckDB manager for Linux
 
-A simple Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
+<!-- [![Crates.io](https://img.shields.io/crates/v/duckup)](https://crates.io/crates/duckup) -->
+<!-- [![License](https://img.shields.io/crates/l/duckup)]( -->
+
+A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
 ## Features
 
@@ -15,7 +18,7 @@ A simple Rust application to manage DuckDB installations, allowing users to list
 
 ## Installation
 
-Clone the repository:
+Clone the repository and install using Cargo:
 
 ```bash
 cargo install --git https://github.com/pmassicotte/duckup
@@ -23,20 +26,26 @@ cargo install --git https://github.com/pmassicotte/duckup
 
 ## Usage
 
-List available DuckDB versions:
+### List available DuckDB versions
 
 ```bash
 duckup list
 ```
 
-Install a specific DuckDB version:
+### Install a specific DuckDB version
 
 ```bash
 duckup install 0.4.0
+
+sudo ~/.cargo/bin/duckup install 0.4.0
 ```
 
-Instll the latest DuckDB version:
+### Install the latest DuckDB version
 
 ```bash
 duckup install
+
+sudo ~/.cargo/bin/duckup install
 ```
+
+Note that for now, the application only supports Linux installations and installs DuckDB in the `/usr/local/bin` directory.
