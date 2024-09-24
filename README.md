@@ -35,9 +35,9 @@ duckup list
 ### Install a specific DuckDB version
 
 ```bash
-duckup install 0.4.0
+duckup install v0.4.0
 
-sudo ~/.cargo/bin/duckup install 0.4.0
+sudo ~/.cargo/bin/duckup install v0.4.0
 ```
 
 ### Install the latest DuckDB version
