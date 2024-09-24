@@ -4,27 +4,79 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Release {
+pub struct Release {
     tag_name: String,
 }
 
-pub fn list_all_versions() -> Result<(), Box<dyn std::error::Error>> {
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ReleaseCollection {
+    releases: Vec<Release>,
+}
+
+impl ReleaseCollection {
+    // Method to create a new ReleaseCollection
+    fn new() -> Self {
+        ReleaseCollection {
+            releases: Vec::new(),
+        }
+    }
+
+    // Method to add a release to the collection
+    fn add_release(&mut self, release: Release) {
+        self.releases.push(release);
+    }
+
+    pub fn print_versions(&self) {
+        for release in &self.releases {
+            println!("{}", release.tag_name);
+        }
+    }
+
+    pub fn contains_version(&self, version: &str) -> bool {
+        self.releases
+            .iter()
+            .any(|release| release.tag_name == version)
+    }
+}
+
+// Implement IntoIterator for ReleaseCollection
+impl IntoIterator for ReleaseCollection {
+    type Item = Release;
+    type IntoIter = std::vec::IntoIter<Release>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.releases.into_iter()
+    }
+}
+
+// Implement IntoIterator for a reference to ReleaseCollection (for borrowing)
+impl<'a> IntoIterator for &'a ReleaseCollection {
+    type Item = &'a Release;
+    type IntoIter = std::slice::Iter<'a, Release>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.releases.iter()
+    }
+}
+
+pub fn duckdb_versions() -> Result<ReleaseCollection> {
     let url = "https://api.github.com/repos/duckdb/duckdb/releases";
     let client = Client::new();
 
     // Set the User-Agent header
-    let response = client
+    let response: Vec<Release> = client
         .get(url)
         .header("User-Agent", "duckup")
         .send()?
-        .json::<Vec<Release>>()?;
+        .json()?;
 
-    println!("DuckDB Versions:");
+    // Create a ReleaseCollection and populate it with the releases
+    let mut release_collection = ReleaseCollection::new();
     for release in response {
-        println!("{}", release.tag_name);
+        release_collection.add_release(release);
     }
 
-    Ok(())
+    Ok(release_collection)
 }
 
 pub fn get_latest_release() -> Result<String> {
