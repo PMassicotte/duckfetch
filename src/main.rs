@@ -4,11 +4,16 @@ use anyhow::{Context, Result};
 use clap::{command, Arg, Command};
 use duckup::duckup::{
     download_duckdb, duckdb_versions, extract_zip, get_latest_release, install_duckdb,
+    version::check,
 };
 
 fn main() -> Result<()> {
     let mut app = command!()
         .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
+        .subcommand(
+            Command::new("check")
+                .about("Compare the installed version of DuckDB with the latest release"),
+        )
         .subcommand(
             Command::new("install")
                 .about("Installs a specific DuckDB version or the latest version if none provided")
@@ -26,6 +31,10 @@ fn main() -> Result<()> {
         available_versions.print_versions();
 
         return Ok(());
+    }
+
+    if matches.subcommand_matches("check").is_some() {
+        check()?;
     }
 
     // Install a specific version. If no version provided, will try to install the latest.

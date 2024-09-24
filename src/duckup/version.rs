@@ -2,6 +2,8 @@ use anyhow::{Context, Result};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use std::process::Command;
+use std::str;
 
 /// Represents a single release with a tag name and publication date.
 #[derive(Serialize, Deserialize, Debug)]
@@ -130,6 +132,53 @@ pub fn get_latest_release() -> Result<String> {
         .context("Could not find the 'tag_name' field in the response")?;
 
     Ok(version.to_string())
+}
+
+/// Checks the installed version of DuckDB and compares it with the latest release.
+///
+/// This function runs the `duckdb --version` command to get the installed version of DuckDB.
+/// It then compares the installed version with the latest release version obtained from
+/// `get_latest_release()`. If the installed version is the latest, it prints a confirmation message.
+/// Otherwise, it informs the user that a newer version is available.
+///
+/// # Errors
+///
+/// This function will print error messages if:
+/// - The `duckdb --version` command fails to run.
+/// - The output of the command cannot be converted to a string.
+/// - The installed version cannot be extracted from the command output.
+///
+/// # Returns
+///
+/// This function returns `Ok(())` if the check completes without encountering any errors.
+pub fn check() -> Result<()> {
+    if let Ok(output) = Command::new("duckdb").arg("--version").output() {
+        if output.status.success() {
+            if let Ok(installed_version) = str::from_utf8(&output.stdout)
+                .map(|s| s.split_whitespace().next().unwrap().to_string())
+            {
+                let latest_release = get_latest_release()?;
+
+                if installed_version == latest_release {
+                    println!("The latest version of DuckDB is installed");
+                } else {
+                    println!(
+                        "A newer version of DuckDB is available.\nInstalled version: {}\nLatest version: {}",
+                        installed_version,
+                        latest_release,
+                    );
+                }
+            } else {
+                eprintln!("Failed to convert output to string");
+            }
+        } else {
+            eprintln!("Failed to extract DuckDB version");
+        }
+    } else {
+        eprintln!("Failed to run `duckdb --version`");
+    }
+
+    Ok(())
 }
 
 #[cfg(test)]
