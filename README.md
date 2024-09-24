@@ -1,8 +1,5 @@
 # duckup: a DuckDB manager for Linux
 
-<!-- [![Crates.io](https://img.shields.io/crates/v/duckup)](https://crates.io/crates/duckup) -->
-<!-- [![License](https://img.shields.io/crates/l/duckup)]( -->
-
 A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
 ## Features
