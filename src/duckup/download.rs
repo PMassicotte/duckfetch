@@ -29,8 +29,6 @@ pub fn download_duckdb(version: &str) -> Result<(PathBuf, TempDir)> {
     let mut response = client.get(&url).send().context("Failed to download file")?;
     copy(&mut response, &mut temp_file).context("Failed to copy content to temporary file")?;
 
-    println!("Downloaded file to: {:?}", temp_file_path);
-
     Ok((temp_file_path, temp_dir))
 }
 

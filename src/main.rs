@@ -47,9 +47,14 @@ fn main() -> Result<()> {
             return Err(anyhow::anyhow!("Version not found"));
         }
 
-        println!("Installing DuckDB version: {}", requested_version);
+        println!("Downloading DuckDB version: {} ...", requested_version);
 
         let (downloaded_file, temp_dir) = download_duckdb(&requested_version)?;
+
+        println!(
+            "DuckDB version {} successfully downloaded",
+            requested_version
+        );
 
         let temp_dir_str = temp_dir.path();
 
@@ -63,7 +68,8 @@ fn main() -> Result<()> {
         let _ = install_duckdb(temp_dir_str, &dest_path);
 
         println!(
-            "DuckDB installed successfully in {}!",
+            "DuckDB {} installed successfully in {}!",
+            requested_version,
             dest_path.to_str().unwrap()
         );
         return Ok(());
