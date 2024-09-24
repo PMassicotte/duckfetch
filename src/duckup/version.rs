@@ -3,28 +3,37 @@ use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+/// Represents a single release with a tag name and publication date.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Release {
     tag_name: String,
     published_at: String,
 }
 
+/// A collection of releases.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ReleaseCollection {
     releases: Vec<Release>,
 }
 
 impl ReleaseCollection {
+    /// Creates a new, empty `ReleaseCollection`.
     fn new() -> Self {
         ReleaseCollection {
             releases: Vec::new(),
         }
     }
 
+    /// Adds a release to the collection.
+    ///
+    /// # Arguments
+    ///
+    /// * `release` - A `Release` to add to the collection.
     fn add_release(&mut self, release: Release) {
         self.releases.push(release);
     }
 
+    /// Prints the versions of all releases in the collection.
     pub fn print_versions(&self) {
         for release in &self.releases {
             println!(
@@ -35,6 +44,15 @@ impl ReleaseCollection {
         }
     }
 
+    /// Checks if the collection contains a release with the specified version.
+    ///
+    /// # Arguments
+    ///
+    /// * `version` - A string slice that holds the version to search for.
+    ///
+    /// # Returns
+    ///
+    /// * `true` if the collection contains the version, `false` otherwise.
     pub fn contains_version(&self, version: &str) -> bool {
         self.releases
             .iter()
@@ -62,6 +80,11 @@ impl<'a> IntoIterator for &'a ReleaseCollection {
     }
 }
 
+/// Fetches the list of DuckDB releases from the GitHub API.
+///
+/// # Returns
+///
+/// * `Result<ReleaseCollection>` - A result containing the `ReleaseCollection` if successful, or an error.
 pub fn duckdb_versions() -> Result<ReleaseCollection> {
     let url = "https://api.github.com/repos/duckdb/duckdb/releases";
     let client = Client::new();
@@ -83,6 +106,11 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     Ok(release_collection)
 }
 
+/// Fetches the latest DuckDB release version from the GitHub API.
+///
+/// # Returns
+///
+/// * `Result<String>` - A result containing the latest version as a string if successful, or an error.
 pub fn get_latest_release() -> Result<String> {
     let url = "https://api.github.com/repos/duckdb/duckdb/releases/latest";
 

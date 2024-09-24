@@ -5,6 +5,15 @@ use std::io::copy;
 use std::path::PathBuf;
 use tempfile::TempDir;
 
+/// Downloads the DuckDB CLI for a specified version and saves it to a temporary directory.
+///
+/// # Arguments
+///
+/// * `version` - A string slice representing the version of DuckDB to download.
+///
+/// # Returns
+///
+/// * `Result<(PathBuf, TempDir)>` - A result containing a tuple with the path to the downloaded file and the temporary directory if successful, or an error.
 pub fn download_duckdb(version: &str) -> Result<(PathBuf, TempDir)> {
     let client = Client::new();
 
@@ -24,3 +33,4 @@ pub fn download_duckdb(version: &str) -> Result<(PathBuf, TempDir)> {
 
     Ok((temp_file_path, temp_dir))
 }
+
