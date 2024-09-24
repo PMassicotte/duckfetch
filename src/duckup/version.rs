@@ -6,6 +6,7 @@ use serde_json::Value;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Release {
     tag_name: String,
+    published_at: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -14,21 +15,23 @@ pub struct ReleaseCollection {
 }
 
 impl ReleaseCollection {
-    // Method to create a new ReleaseCollection
     fn new() -> Self {
         ReleaseCollection {
             releases: Vec::new(),
         }
     }
 
-    // Method to add a release to the collection
     fn add_release(&mut self, release: Release) {
         self.releases.push(release);
     }
 
     pub fn print_versions(&self) {
         for release in &self.releases {
-            println!("{}", release.tag_name);
+            println!(
+                "{:<8} ({})",
+                release.tag_name,
+                release.published_at.split('T').next().unwrap()
+            );
         }
     }
 
@@ -67,7 +70,8 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     let response: Vec<Release> = client
         .get(url)
         .header("User-Agent", "duckup")
-        .send()?
+        .send()
+        .context("Failed to send request")?
         .json()?;
 
     // Create a ReleaseCollection and populate it with the releases
