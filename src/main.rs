@@ -1,93 +1,33 @@
-use dirs::home_dir;
-
-use anyhow::{Context, Result};
-use clap::{command, Arg, Command};
-use duckup::duckup::{
-    download_duckdb, duckdb_versions, extract_zip, get_latest_release, install_duckdb,
-    version::check,
-};
+use anyhow::Result;
+use duckup::duckup::{build_cli, check, duckdb_versions, get_latest_release, install_duckdb};
 
 fn main() -> Result<()> {
-    let mut app = command!()
-        .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
-        .subcommand(
-            Command::new("check")
-                .about("Compare the installed version of DuckDB with the latest release"),
-        )
-        .subcommand(
-            Command::new("install")
-                .about("Installs a specific DuckDB version or the latest version if none provided")
-                .arg(
-                    Arg::new("version")
-                        .help("The version of DuckDB to install. Should be in the form of vx.y.z.")
-                        .required(false),
-                ),
-        );
+    // Create the subcommands
+    let mut app = build_cli(); // Declare `app` as mutable
 
-    let matches = app.clone().get_matches();
+    let matches = app.get_matches_mut();
 
-    if matches.subcommand_matches("list").is_some() {
-        let available_versions = duckdb_versions()?;
-        available_versions.print_versions();
-
-        return Ok(());
-    }
-
-    if matches.subcommand_matches("check").is_some() {
-        check()?;
-    }
-
-    // Install a specific version. If no version provided, will try to install the latest.
-    if let Some(install_matches) = matches.subcommand_matches("install") {
-        let requested_version = install_matches
-            .get_one::<String>("version")
-            .map_or_else(get_latest_release, |ver| Ok(ver.to_string()))?;
-
-        let available_versions = duckdb_versions()?;
-
-        // Check if the requested version exists in the available versions
-        if !available_versions.contains_version(&requested_version) {
-            eprintln!(
-                "Error: Requested DuckDB version '{}' is not available. Choose one of the folowing:",
-                requested_version
-            );
-
+    match matches.subcommand() {
+        Some(("list", _)) => {
+            let available_versions = duckdb_versions()?;
             available_versions.print_versions();
-            return Err(anyhow::anyhow!("Version not found"));
         }
+        Some(("check", _)) => {
+            check()?;
+        }
+        Some(("install", install_matches)) => {
+            // Install a specific version. If no version provided, will try to install the latest.
+            let requested_version = install_matches
+                .get_one::<String>("version")
+                .map_or_else(get_latest_release, |ver| Ok(ver.to_string()))?;
 
-        println!("Downloading DuckDB version: {} ...", requested_version);
-
-        let (downloaded_file, temp_dir) = download_duckdb(&requested_version)?;
-
-        println!(
-            "DuckDB version {} successfully downloaded",
-            requested_version
-        );
-
-        let temp_dir_str = temp_dir.path();
-
-        extract_zip(downloaded_file, temp_dir_str)?;
-
-        let dest_path = home_dir()
-            .context("Could not find the home directory")?
-            .join(".local")
-            .join("bin");
-
-        install_duckdb(temp_dir_str, &dest_path)?;
-
-        println!(
-            "DuckDB {} installed successfully in {}!",
-            requested_version,
-            dest_path.to_str().unwrap()
-        );
-        return Ok(());
-    }
-
-    // Print help message if no subcommand is provided
-    if matches.subcommand_name().is_none() {
-        app.print_help()?;
-        println!();
+            install_duckdb(requested_version)?;
+        }
+        _ => {
+            // Display help if no subcommand provided
+            app.print_help()?;
+            println!();
+        }
     }
 
     Ok(())
