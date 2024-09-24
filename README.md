@@ -43,3 +43,11 @@ duckup install v0.4.0
 ```bash
 duckup install
 ```
+
+## Help
+
+For more information, use the `--help` flag:
+
+```bash
+duckup install --help
+```

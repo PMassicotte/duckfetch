@@ -11,7 +11,7 @@ fn main() -> Result<()> {
         .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
         .subcommand(
             Command::new("install")
-                .about("Installs a specific DuckDB version")
+                .about("Installs a specific DuckDB version or the latest version if none provided")
                 .arg(
                     Arg::new("version")
                         .help("The version of DuckDB to install. Should be in the form of vx.y.z.")
