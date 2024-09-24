@@ -34,3 +34,21 @@ pub fn download_duckdb(version: &str) -> Result<(PathBuf, TempDir)> {
     Ok((temp_file_path, temp_dir))
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_download_duckdb() {
+        let version = "v0.2.7";
+        let result = download_duckdb(version);
+
+        assert!(result.is_ok());
+
+        let (path, temp_dir) = result.unwrap();
+        assert!(path.exists());
+
+        // Clean up the temporary directory
+        drop(temp_dir);
+    }
+}
