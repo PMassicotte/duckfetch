@@ -36,16 +36,10 @@ duckup list
 
 ```bash
 duckup install v0.4.0
-
-sudo ~/.cargo/bin/duckup install v0.4.0
 ```
 
 ### Install the latest DuckDB version
 
 ```bash
 duckup install
-
-sudo ~/.cargo/bin/duckup install
 ```
-
-Note that for now, the application only supports Linux installations and installs DuckDB in the `/usr/local/bin` directory.
