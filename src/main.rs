@@ -6,7 +6,7 @@ use duckup::duckup::{
 
 fn main() -> Result<()> {
     let mut app = command!()
-        .subcommand(Command::new("list-versions").about("Lists all available DuckDB versions"))
+        .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
         .subcommand(
             Command::new("install")
                 .about("Installs a specific DuckDB version")
@@ -19,7 +19,7 @@ fn main() -> Result<()> {
 
     let matches = app.clone().get_matches();
 
-    if matches.subcommand_matches("list-versions").is_some() {
+    if matches.subcommand_matches("list").is_some() {
         let available_versions = duckdb_versions()?;
         available_versions.print_versions();
 
