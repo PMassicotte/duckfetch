@@ -35,6 +35,12 @@ impl ReleaseCollection {
         self.releases.push(release);
     }
 
+    pub fn releases(&self) -> Vec<String> {
+        let releases: Vec<String> = self.releases.iter().map(|r| r.tag_name.clone()).collect();
+
+        releases
+    }
+
     /// Prints the versions of all releases in the collection.
     pub fn print_versions(&self) {
         for release in &self.releases {

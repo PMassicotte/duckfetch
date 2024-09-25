@@ -26,4 +26,7 @@ pub fn build_cli() -> Command {
                         .required(false),
                 ),
         )
+        .subcommand(
+            Command::new("install-from").about("Install DuckDB using a list of available versions"),
+        )
 }
