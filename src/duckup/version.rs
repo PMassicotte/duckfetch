@@ -166,7 +166,10 @@ pub fn check() -> Result<()> {
                 let latest_release = get_latest_release()?;
 
                 if installed_version == latest_release {
-                    println!("The latest version of DuckDB is installed");
+                    println!(
+                        "The latest version of DuckDB is installed ({})",
+                        latest_release
+                    );
                 } else {
                     println!(
                         "A newer version of DuckDB is available.\nInstalled version: {}\nLatest version: {}",
