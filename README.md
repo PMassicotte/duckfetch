@@ -2,6 +2,10 @@
 
 A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
+## Demo
+
+![Demo](./assets/demo.gif)
+
 ## Features
 
 - List available DuckDB versions from GitHub releases.
@@ -23,19 +27,21 @@ cargo install --git https://github.com/pmassicotte/duckup
 
 ## Usage
 
+### Check the currently installed DuckDB version
+
+```bash
+duckup check
+```
+
 ### List available DuckDB versions
 
 ```bash
 duckup list
 ```
 
-### Install a specific DuckDB version
+### Install DuckDB
 
-```bash
-duckup install v0.4.0
-```
-
-### Install the latest DuckDB version
+This command will print the available versions and ask the user to select one to install.
 
 ```bash
 duckup install
