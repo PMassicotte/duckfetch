@@ -23,7 +23,7 @@ fn main() -> Result<()> {
             let available_versions = duckdb_versions()?;
             let tag_names = available_versions.releases();
             let selected_tag = inquire::Select::new(
-                "Select DucDB version to install (Esc to cancel): ",
+                "Select the DuckDB version to install (Esc to cancel): ",
                 tag_names,
             )
             .prompt()
