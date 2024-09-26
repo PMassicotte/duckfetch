@@ -2,6 +2,7 @@ pub mod cli;
 pub mod download;
 pub mod extract;
 pub mod install;
+pub mod url;
 pub mod version;
 
 pub use cli::build_cli;

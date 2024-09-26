@@ -82,8 +82,6 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
 
     extract_zip(downloaded_file, temp_dir_str)?;
 
-    println!("Extracted ok!");
-
     let dest_path = home_dir()
         .context("Could not find the home directory")?
         .join(".local")

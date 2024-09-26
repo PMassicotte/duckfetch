@@ -5,6 +5,8 @@ use serde_json::Value;
 use std::process::Command;
 use std::str;
 
+use crate::duckfetch::url;
+
 /// Represents a single release with a tag name and publication date.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Release {
@@ -116,18 +118,18 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     // Create a ReleaseCollection and populate it with the releases
     let mut release_collection = ReleaseCollection::new();
 
+    // Duild the url here using the pathbuilder() function
+
     // Add the nightly version
     release_collection.add_release(Release {
         tag_name: "Nightly".to_string(),
         published_at: "yyyy-mm-dd".to_string(),
-        url: "https://artifacts.duckdb.org/latest/duckdb-binaries-linux.zip".to_string(),
+        url: url::build("Nightly"),
+        // url: "https://artifacts.duckdb.org/latest/duckdb-binaries-linux.zip".to_string(),
     });
 
     for mut release in response {
-        release.url = format!(
-            "https://github.com/duckdb/duckdb/releases/download/{}/duckdb_cli-linux-amd64.zip",
-            release.tag_name
-        );
+        release.url = url::build(&release.tag_name);
         release_collection.add_release(release);
     }
 
