@@ -1,5 +1,22 @@
+//! This module provides the main entry point for the DuckDB CLI application.
+//!
+//! The application supports the following subcommands:
+//!
+//! - `list`: Lists the available DuckDB versions.
+//! - `check`: Checks the current setup.
+//! - `install`: Prompts the user to select a DuckDB version to install and installs it.
+//!
+//! The main function builds the command-line interface (CLI) using `build_cli` and
+//! matches the subcommands provided by the user to perform the corresponding actions.
+
+mod duckfetch;
+
+use duckfetch::build_cli;
+use duckfetch::check;
+use duckfetch::duckdb_versions;
+use duckfetch::install_duckdb;
+
 use anyhow::{Context, Result};
-use duckup::duckup::{build_cli, check, duckdb_versions, install_duckdb};
 
 fn main() -> Result<()> {
     let mut app = build_cli();

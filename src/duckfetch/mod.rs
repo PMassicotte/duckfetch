@@ -8,4 +8,4 @@ pub use cli::build_cli;
 pub use download::download_duckdb;
 pub use extract::extract_zip;
 pub use install::install_duckdb;
-pub use version::{check, duckdb_versions, get_latest_release};
+pub use version::{check, duckdb_versions};

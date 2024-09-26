@@ -1,7 +1,16 @@
 [package]
-name = "duckup"
-version = "0.1.1"
+name = "duckfetch"
+version = "0.2.0"
 edition = "2021"
+authors = ["Philippe Massicotte <pmassicotte@hotmail.com>"]
+description = " A simple Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/pmassicotte/duckfetch"
+homepage = "https://github.com/pmassicotte/duckfetch"
+documentation = "https://docs.rs/duckfetch"
+readme = "README.md"
+keywords = ["DuckDB", "database", "fetch", "management", "CLI", "tool"]
+categories = ["command-line-interface"]
 
 [dependencies]
 anyhow = "1.0"

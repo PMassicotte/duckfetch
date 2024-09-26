@@ -100,7 +100,7 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     // Set the User-Agent header
     let response: Vec<Release> = client
         .get(url)
-        .header("User-Agent", "duckup")
+        .header("User-Agent", "duckfetch")
         .send()
         .context("Failed to send request")?
         .json()?;
@@ -126,7 +126,7 @@ pub fn get_latest_release() -> Result<String> {
 
     let response = client
         .get(url)
-        .header("User-Agent", "duckup")
+        .header("User-Agent", "duckfetch")
         .send()
         .context("Failed to send request")?
         .text()

@@ -1,6 +1,6 @@
-use crate::duckup::download_duckdb;
-use crate::duckup::duckdb_versions;
-use crate::duckup::extract_zip;
+use crate::duckfetch::download_duckdb;
+use crate::duckfetch::duckdb_versions;
+use crate::duckfetch::extract_zip;
 use anyhow::{Context, Result};
 use dirs::home_dir;
 use std::fs;

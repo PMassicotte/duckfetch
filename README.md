@@ -1,4 +1,4 @@
-# duckup: a DuckDB manager for Linux
+# duckfetch: a DuckDB manager for Linux
 
 A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
@@ -22,7 +22,7 @@ A simple (**very experimental**) Rust application to manage DuckDB installations
 Clone the repository and install using Cargo:
 
 ```bash
-cargo install --git https://github.com/pmassicotte/duckup
+cargo install --git https://github.com/pmassicotte/duckfetch
 ```
 
 ## Usage
@@ -30,13 +30,13 @@ cargo install --git https://github.com/pmassicotte/duckup
 ### Check the currently installed DuckDB version
 
 ```bash
-duckup check
+duckfetch check
 ```
 
 ### List available DuckDB versions
 
 ```bash
-duckup list
+duckfetch list
 ```
 
 ### Install DuckDB
@@ -44,7 +44,7 @@ duckup list
 This command will print the available versions and ask the user to select one to install.
 
 ```bash
-duckup install
+duckfetch install
 ```
 
 ## Help
@@ -52,5 +52,5 @@ duckup install
 For more information, use the `--help` flag:
 
 ```bash
-duckup install --help
+duckfetch install --help
 ```
