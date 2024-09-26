@@ -1,5 +1,9 @@
 # duckfetch: a DuckDB manager for Linux
 
+[![Crates.io](https://img.shields.io/crates/v/duckfetch)](https://crates.io/crates/duckfetch)
+
+[![License](https://img.shields.io/badge/license-Apache%202.0%20%7C%20MIT-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
 ## Demo
