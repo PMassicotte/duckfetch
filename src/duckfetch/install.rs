@@ -1,6 +1,7 @@
 use crate::duckfetch::download_duckdb;
 use crate::duckfetch::duckdb_versions;
 use crate::duckfetch::extract_zip;
+use crate::duckfetch::version::Release;
 use anyhow::{Context, Result};
 use dirs::home_dir;
 use std::fs;
@@ -51,32 +52,37 @@ fn install(temp_unzip_dir: &Path, dest_path: &Path) -> Result<()> {
 /// # Returns
 ///
 /// This function returns `Ok(())` if the installation completes successfully.
-pub fn install_duckdb(requested_version: String) -> Result<()> {
+pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     let available_versions = duckdb_versions()?;
 
     // Check if the requested version exists in the available versions
-    if !available_versions.contains_version(&requested_version) {
+    if !available_versions.contains_version(&requested_release.tag_name) {
         eprintln!(
             "Error: Requested DuckDB version '{}' is not available. Choose one of the folowing:",
-            requested_version
+            requested_release.tag_name
         );
 
         available_versions.print_versions();
         return Err(anyhow::anyhow!("Version not found"));
     }
 
-    println!("Downloading DuckDB version: {} ...", requested_version);
+    println!(
+        "Downloading DuckDB version: {} ...",
+        requested_release.tag_name
+    );
 
-    let (downloaded_file, temp_dir) = download_duckdb(&requested_version)?;
+    let (downloaded_file, temp_dir) = download_duckdb(requested_release)?;
 
     println!(
         "DuckDB version {} successfully downloaded",
-        requested_version
+        &requested_release.tag_name
     );
 
     let temp_dir_str = temp_dir.path();
 
     extract_zip(downloaded_file, temp_dir_str)?;
+
+    println!("Extracted ok!");
 
     let dest_path = home_dir()
         .context("Could not find the home directory")?
@@ -87,7 +93,7 @@ pub fn install_duckdb(requested_version: String) -> Result<()> {
 
     println!(
         "DuckDB {} installed successfully in {}!",
-        requested_version,
+        requested_release.tag_name,
         dest_path.to_str().unwrap()
     );
 

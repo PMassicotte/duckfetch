@@ -39,7 +39,11 @@ fn main() -> Result<()> {
             .prompt()
             .context("Error")?;
 
-            install_duckdb(selected_tag)?;
+            let release = available_versions
+                .get_release_by_tag(&selected_tag)
+                .context("err")?;
+
+            install_duckdb(release)?;
         }
         _ => {
             app.print_help()?;
