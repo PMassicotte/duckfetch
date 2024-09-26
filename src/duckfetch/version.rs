@@ -139,7 +139,7 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
 /// # Returns
 ///
 /// * `Result<String>` - A result containing the latest version as a string if successful, or an error.
-pub fn get_latest_release() -> Result<String> {
+pub fn latest_stable_release() -> Result<String> {
     let url = "https://api.github.com/repos/duckdb/duckdb/releases/latest";
 
     let client = Client::new();
@@ -183,16 +183,21 @@ pub fn check() -> Result<()> {
             if let Ok(installed_version) = str::from_utf8(&output.stdout)
                 .map(|s| s.split_whitespace().next().unwrap().to_string())
             {
-                let latest_release = get_latest_release()?;
+                let latest_release = latest_stable_release()?;
 
                 if installed_version == latest_release {
                     println!(
-                        "The latest version of DuckDB is installed ({})",
+                        "The latest stable release of DuckDB is installed ({})",
                         latest_release
+                    );
+                } else if installed_version.contains("dev") {
+                    println!(
+                        "Nightly version installed: {}\nLatest stable version: {}",
+                        installed_version, latest_release
                     );
                 } else {
                     println!(
-                        "A newer version of DuckDB is available.\nInstalled version: {}\nLatest version: {}",
+                        "A newer version of DuckDB is available.\nInstalled version: {}\nLatest stable version: {}",
                         installed_version,
                         latest_release,
                     );
