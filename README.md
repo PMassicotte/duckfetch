@@ -23,7 +23,13 @@ A simple (**very experimental**) Rust application to manage DuckDB installations
 
 ## Installation
 
-Clone the repository and install using Cargo:
+To install it from crates.io:
+
+```bash
+cargo install duckfetch
+```
+
+Or the development version:
 
 ```bash
 cargo install --git https://github.com/pmassicotte/duckfetch
