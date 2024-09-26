@@ -9,7 +9,7 @@ repository = "https://github.com/pmassicotte/duckfetch"
 homepage = "https://github.com/pmassicotte/duckfetch"
 documentation = "https://docs.rs/duckfetch"
 readme = "README.md"
-keywords = ["DuckDB", "database", "fetch", "management", "CLI", "tool"]
+keywords = ["DuckDB", "database", "fetch", "CLI", "tool"]
 categories = ["command-line-interface"]
 
 [dependencies]
