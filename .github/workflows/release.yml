@@ -1,0 +1,64 @@
+name: Build Binaries
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+# on:
+#   push:
+#     tags:
+#       - "v*" # Only trigger this action on new version tags (e.g., v1.0.0)
+
+jobs:
+  build:
+    name: Build and Release Binaries
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Install Rust toolchain
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          components: cargo
+
+      # Build the project
+      - name: Build the project
+        run: cargo build --release
+
+      # Upload the binaries as build artifacts
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-binary
+          path: target/release/duckfetch
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      # Checkout the code to get the tag info
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Create a GitHub release
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            **/release/duckfetch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
