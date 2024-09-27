@@ -218,33 +218,37 @@ pub fn check() -> Result<()> {
     Ok(())
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//
-//     #[test]
-//     fn test_add_release() {
-//         let mut collection = ReleaseCollection::new();
-//         let release = Release {
-//             tag_name: "v1.0.0".to_string(),
-//             published_at: "2023-01-01T00:00:00Z".to_string(),
-//         };
-//         collection.add_release(release);
-//
-//         assert_eq!(collection.releases.len(), 1);
-//         assert_eq!(collection.releases[0].tag_name, "v1.0.0");
-//     }
-//
-//     #[test]
-//     fn test_contains_version() {
-//         let mut collection = ReleaseCollection::new();
-//         let release = Release {
-//             tag_name: "v1.0.0".to_string(),
-//             published_at: "2023-01-01T00:00:00Z".to_string(),
-//         };
-//         collection.add_release(release);
-//
-//         assert!(collection.contains_version("v1.0.0"));
-//         assert!(!collection.contains_version("v2.0.0"));
-//     }
-// }
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_add_release() {
+        let tag_name = "v1.0.0";
+        let mut collection = ReleaseCollection::new();
+        let release = Release {
+            tag_name: tag_name.to_string(),
+            published_at: "2023-01-01T00:00:00Z".to_string(),
+            url: url::build(tag_name),
+        };
+        collection.add_release(release);
+
+        assert_eq!(collection.releases.len(), 1);
+        assert_eq!(collection.releases[0].tag_name, "v1.0.0");
+    }
+
+    #[test]
+    fn test_contains_version() {
+        let tag_name = "v1.0.0";
+        let mut collection = ReleaseCollection::new();
+        let release = Release {
+            tag_name: tag_name.to_string(),
+            published_at: "2023-01-01T00:00:00Z".to_string(),
+            url: url::build(tag_name),
+        };
+        collection.add_release(release);
+
+        assert!(collection.contains_version("v1.0.0"));
+        assert!(!collection.contains_version("v2.0.0"));
+    }
+}
