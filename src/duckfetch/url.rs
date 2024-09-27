@@ -119,35 +119,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stable_windows_amd64() {
-        let tag_name = "v1.1.1";
-        let expected = "https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-windows-amd64.zip";
-        let result = build(tag_name);
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_nightly_windows() {
-        let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-windows.zip";
-        let result = build("Nightly");
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_stable_macos() {
-        let expected = "https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-osx-universal.zip";
-        let result = build("v1.1.1");
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_nightly_macos() {
-        let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-osx.zip";
-        let result = build("Nightly");
-        assert_eq!(result, expected);
-    }
-
-    #[test]
     fn test_stable_linux_amd64() {
         let expected =
             "https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-linux-amd64.zip";
@@ -162,10 +133,41 @@ mod tests {
         assert_eq!(result, expected);
     }
 
-    #[test]
-    fn test_nightly_linux_aarch64() {
-        let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-linux-aarch64.zip";
-        let result = build("Nightly");
-        assert_eq!(result, expected);
-    }
+    // How could I mock os and platform
+    //
+    // #[test]
+    // fn test_stable_windows_amd64() {
+    //     let tag_name = "v1.1.1";
+    //     let expected = "https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-windows-amd64.zip";
+    //     let result = build(tag_name);
+    //     assert_eq!(result, expected);
+    // }
+    //
+    // #[test]
+    // fn test_nightly_windows() {
+    //     let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-windows.zip";
+    //     let result = build("Nightly");
+    //     assert_eq!(result, expected);
+    // }
+    //
+    // #[test]
+    // fn test_stable_macos() {
+    //     let expected = "https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-osx-universal.zip";
+    //     let result = build("v1.1.1");
+    //     assert_eq!(result, expected);
+    // }
+    //
+    // #[test]
+    // fn test_nightly_macos() {
+    //     let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-osx.zip";
+    //     let result = build("Nightly");
+    //     assert_eq!(result, expected);
+    // }
+    //
+    // #[test]
+    // fn test_nightly_linux_aarch64() {
+    //     let expected = "https://artifacts.duckdb.org/latest/duckdb-binaries-linux-aarch64.zip";
+    //     let result = build("Nightly");
+    //     assert_eq!(result, expected);
+    // }
 }
