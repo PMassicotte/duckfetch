@@ -209,7 +209,7 @@ pub fn check() -> Result<()> {
             eprintln!("Failed to extract DuckDB version");
         }
     } else {
-        eprintln!("Failed to run `duckdb --version`");
+        eprintln!("Failed to run `duckdb --version`. Is it currently installed?");
     }
 
     Ok(())
