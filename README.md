@@ -1,4 +1,4 @@
-# duckfetch: a DuckDB manager for Linux
+# duckfetch: a DuckDB manager for Linux (maybe Windows and MacOS)
 
 [![Crates.io](https://img.shields.io/crates/v/duckfetch)](https://crates.io/crates/duckfetch)
 
