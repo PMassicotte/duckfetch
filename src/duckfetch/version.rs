@@ -155,6 +155,7 @@ pub fn latest_stable_release() -> Result<String> {
         .context("Failed to read response text")?;
 
     let json: Value = serde_json::from_str(&response).context("Failed to parse JSON")?;
+
     let version = json["tag_name"]
         .as_str()
         .context("Could not find the 'tag_name' field in the response")?;

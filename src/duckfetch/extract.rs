@@ -34,21 +34,25 @@ pub fn extract_zip(file_path: PathBuf, output_dir: &Path) -> Result<()> {
                 .context("Failed to find the specified file in the archive")?;
 
             let temp_dir = tempdir().context("Failed to create temporary directory")?;
+
             let temp_zip_path = temp_dir.path().join("duckdb.zip");
 
             let mut temp_zip_file =
                 File::create(&temp_zip_path).context("Failed to create temporary zip file")?;
+
             std::io::copy(&mut nested_zip, &mut temp_zip_file)
                 .context("Failed to copy contents to temporary zip file")?;
 
             let nested_file =
                 File::open(&temp_zip_path).context("Failed to open nested zip file")?;
+
             let mut nested_archive =
                 ZipArchive::new(nested_file).context("Failed to read nested zip archive")?;
 
             nested_archive
                 .extract(output_dir)
                 .context("Failed to extract nested zip archive")?;
+
             Ok(())
         }
         _ => Err(anyhow::anyhow!("Invalid zip file")),

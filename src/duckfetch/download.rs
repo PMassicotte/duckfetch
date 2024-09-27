@@ -20,13 +20,16 @@ pub fn download_duckdb(release: &Release) -> Result<(PathBuf, TempDir)> {
     let client = Client::new();
 
     let temp_dir = tempfile::tempdir().context("Failed to create temporary directory")?;
+
     let temp_file_path = temp_dir.path().join("duckdb_cli-linux-amd64.zip");
+
     let mut temp_file = File::create(&temp_file_path).context("Failed to create temporary file")?;
 
     let mut response = client
         .get(&release.url)
         .send()
         .context("Failed to download file")?;
+
     copy(&mut response, &mut temp_file).context("Failed to copy content to temporary file")?;
 
     Ok((temp_file_path, temp_dir))

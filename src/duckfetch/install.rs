@@ -63,6 +63,7 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
         );
 
         available_versions.print_versions();
+
         return Err(anyhow::anyhow!("Version not found"));
     }
 
