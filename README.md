@@ -64,3 +64,8 @@ For more information, use the `--help` flag:
 ```bash
 duckfetch install --help
 ```
+
+## Other related projects
+
+- https://github.com/NiclasHaderer/duckdb-version-manager
+- https://github.com/carlopi/duckdb-latest
