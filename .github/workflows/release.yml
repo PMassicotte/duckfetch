@@ -2,15 +2,8 @@ name: Build Binaries
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-# on:
-#   push:
-#     tags:
-#       - "v*" # Only trigger this action on new version tags (e.g., v1.0.0)
+    tags:
+      - "v*" # Only trigger when creating a tag
 
 jobs:
   build:
