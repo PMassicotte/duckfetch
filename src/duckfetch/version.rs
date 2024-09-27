@@ -118,8 +118,6 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     // Create a ReleaseCollection and populate it with the releases
     let mut release_collection = ReleaseCollection::new();
 
-    // Duild the url here using the pathbuilder() function
-
     // Add the nightly version
     release_collection.add_release(Release {
         tag_name: "Nightly".to_string(),
