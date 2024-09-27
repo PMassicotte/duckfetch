@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }}-binary
-          path: target/release/duckfetch
+          path: ${{ format('target/release/{0}', (matrix.os == 'windows-latest') && 'duckfetch.exe' || 'duckfetch') }}
 
   release:
     name: Create GitHub Release
@@ -60,5 +60,6 @@ jobs:
         with:
           files: |
             **/release/duckfetch
+            **/release/duckfetch.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
