@@ -8,22 +8,60 @@ use dirs::home_dir;
 use inquire::Confirm;
 use std::fs;
 use std::path::Path;
+use std::path::PathBuf;
+
+/// Returns the appropriate destination directory for the DuckDB binary based on the operating system.
+///
+/// On Windows, it uses `AppData\Local\bin` under the user's home directory.
+/// On Linux/macOS, it uses `.local/bin` under the user's home directory.
+///
+/// # Errors
+///
+/// Returns an error if the home directory cannot be determined.
+fn get_dest_dir() -> Result<PathBuf> {
+    let home_dir = home_dir().context("Could not find the home directory")?;
+    let dest_dir = if cfg!(target_os = "windows") {
+        home_dir.join("AppData").join("Local").join("bin")
+    } else {
+        home_dir.join(".local").join("bin")
+    };
+
+    Ok(dest_dir)
+}
 
 /// Installs the DuckDB binary by moving it from the output directory to the install directory.
 ///
 /// # Arguments
 ///
-/// * `output_dir` - A `Path` representing the path to the directory containing the DuckDB binary.
-/// * `install_dir` - A `Path` representing the path to the directory where the DuckDB binary should be installed.
+/// * `temp_unzip_dir` - A `Path` representing the path to the directory containing the DuckDB binary.
+/// * `dest_path` - A `Path` representing the path to the directory where the DuckDB binary should be installed.
 ///
 /// # Returns
 ///
 /// * `Result<()>` - An empty result if successful, or an error if the installation fails.
 fn install(temp_unzip_dir: &Path, dest_path: &Path) -> Result<()> {
-    let src = Path::new(temp_unzip_dir).join("duckdb");
-    let dest_path = Path::new(dest_path).join("duckdb");
+    let entries = fs::read_dir(temp_unzip_dir).context("Failed to read directory")?;
+    let mut found = false;
 
-    fs::rename(src, dest_path).context("Failed to move DuckDB binary")?;
+    for entry in entries {
+        let entry = entry.context("Failed to read directory entry")?;
+        let file_name = entry.file_name();
+        let file_name_str = file_name.to_string_lossy();
+
+        if file_name_str == "duckdb" || file_name_str == "duckdb.exe" {
+            let src = entry.path();
+            let dest = Path::new(dest_path).join("duckdb");
+            fs::rename(&src, &dest).context("Failed to move DuckDB binary")?;
+            found = true;
+            break;
+        }
+    }
+
+    if !found {
+        return Err(anyhow::anyhow!(
+            "Neither duckdb nor duckdb.exe found in the source directory"
+        ));
+    }
 
     Ok(())
 }
@@ -86,13 +124,7 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     extract_zip(downloaded_file, temp_dir_str)?;
 
     // Determine the destination path based on the platform
-    let dest_dir = home_dir()
-        .context("Could not find the home directory")?
-        .join(if cfg!(target_os = "windows") {
-            "bin" // Windows uses `bin` under home directory
-        } else {
-            ".local/bin" // Linux/macOS use `.local/bin`
-        });
+    let dest_dir = get_dest_dir()?;
 
     // Ask the user if the destination folder should be created
     if !dest_dir.exists() {
