@@ -2,8 +2,10 @@ use crate::duckfetch::download_duckdb;
 use crate::duckfetch::duckdb_versions;
 use crate::duckfetch::extract_zip;
 use crate::duckfetch::version::Release;
+use anyhow::Ok;
 use anyhow::{Context, Result};
 use dirs::home_dir;
+use inquire::Confirm;
 use std::fs;
 use std::path::Path;
 
@@ -84,7 +86,7 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     extract_zip(downloaded_file, temp_dir_str)?;
 
     // Determine the destination path based on the platform
-    let dest_path = home_dir()
+    let dest_dir = home_dir()
         .context("Could not find the home directory")?
         .join(if cfg!(target_os = "windows") {
             "bin" // Windows uses `bin` under home directory
@@ -92,12 +94,34 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
             ".local/bin" // Linux/macOS use `.local/bin`
         });
 
-    install(temp_dir_str, &dest_path)?;
+    // Ask the user if the destination folder should be created
+    if !dest_dir.exists() {
+        let answer = Confirm::new(&format!(
+            "{} does not exist. Would you like to create it?",
+            dest_dir.display()
+        ))
+        .with_default(false)
+        .with_help_message("Select 'yes' to create the folder")
+        .prompt()?;
+
+        if answer {
+            // Create the directory if the user agreed
+            fs::create_dir_all(&dest_dir)
+                .context(format!("Failed to create directory {}", dest_dir.display()))?;
+            println!("Directory {} created successfully.", dest_dir.display());
+        } else {
+            return Err(anyhow::anyhow!(
+                "Aborting installation as the destination directory was not created."
+            ));
+        }
+    }
+
+    install(temp_dir_str, &dest_dir)?;
 
     println!(
         "DuckDB {} installed successfully in {}!",
         requested_release.tag_name,
-        dest_path.to_str().unwrap()
+        dest_dir.to_str().unwrap()
     );
 
     Ok(())
