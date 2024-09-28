@@ -161,6 +161,30 @@ pub fn latest_stable_release() -> Result<String> {
     Ok(version.to_string())
 }
 
+/// Retrieves the installed version of DuckDB by executing the `duckdb --version` command.
+///
+/// # Returns
+///
+/// * `Ok(String)` - The installed version of DuckDB as a string.
+/// * `Err(anyhow::Error)` - If there is an error executing the command, converting the output to UTF-8, or parsing the version.
+///
+/// # Errors
+///
+/// This function will return an error if:
+/// - The `duckdb` command fails to execute.
+/// - The output of the `duckdb` command cannot be converted to a UTF-8 string.
+/// - The version string cannot be parsed from the command output.
+pub fn installed_version() -> Result<String> {
+    let output = Command::new("duckdb").arg("--version").output()?;
+    let installed_version = str::from_utf8(&output.stdout)?
+        .split_whitespace()
+        .next()
+        .context("Failed to parse DuckDB version")?
+        .to_string();
+
+    Ok(installed_version)
+}
+
 /// Checks the installed version of DuckDB and compares it with the latest release.
 ///
 /// This function runs the `duckdb --version` command to get the installed version of DuckDB.
@@ -179,38 +203,31 @@ pub fn latest_stable_release() -> Result<String> {
 ///
 /// This function returns `Ok(())` if the check completes without encountering any errors.
 pub fn check() -> Result<()> {
-    if let Ok(output) = Command::new("duckdb").arg("--version").output() {
-        if output.status.success() {
-            if let Ok(installed_version) = str::from_utf8(&output.stdout)
-                .map(|s| s.split_whitespace().next().unwrap().to_string())
-            {
-                let latest_release = latest_stable_release()?;
+    match installed_version() {
+        Ok(installed_version) => {
+            let latest_release = latest_stable_release()?;
 
-                if installed_version == latest_release {
-                    println!(
-                        "The latest stable release of DuckDB is installed ({})",
-                        latest_release
-                    );
-                } else if installed_version.contains("dev") {
-                    println!(
-                        "Nightly version installed: {}\nLatest stable version: {}",
-                        installed_version, latest_release
-                    );
-                } else {
-                    println!(
-                        "A newer version of DuckDB is available.\nInstalled version: {}\nLatest stable version: {}",
-                        installed_version,
-                        latest_release,
-                    );
-                }
+            if installed_version == latest_release {
+                println!(
+                    "The latest stable release of DuckDB is installed ({})",
+                    latest_release
+                );
+            } else if installed_version.contains("dev") {
+                println!(
+                    "Nightly version installed: {}\nLatest stable version: {}",
+                    installed_version, latest_release
+                );
             } else {
-                eprintln!("Failed to convert output to string");
+                println!(
+                    "A newer version of DuckDB is available.\nInstalled version: {}\nLatest stable version: {}",
+                    installed_version,
+                    latest_release,
+                );
             }
-        } else {
-            eprintln!("Failed to extract DuckDB version");
         }
-    } else {
-        eprintln!("Failed to run `duckdb --version`. Is it currently installed?");
+        Err(_) => {
+            eprintln!("Failed to get installed DuckDB version");
+        }
     }
 
     Ok(())

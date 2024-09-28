@@ -21,4 +21,5 @@ pub fn build_cli() -> Command {
             Command::new("install")
                 .about("Installs a specific version of DuckDB given a proposed list of releases"),
         )
+        .subcommand(Command::new("update").about("Update DuckDB to the latest version"))
 }

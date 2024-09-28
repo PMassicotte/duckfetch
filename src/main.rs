@@ -17,6 +17,7 @@ use duckfetch::duckdb_versions;
 use duckfetch::install_duckdb;
 
 use anyhow::{Context, Result};
+use duckfetch::version::latest_stable_release;
 
 fn main() -> Result<()> {
     let mut app = build_cli();
@@ -41,6 +42,17 @@ fn main() -> Result<()> {
 
             let release = available_versions
                 .get_release_by_tag(&selected_tag)
+                .context("err")?;
+
+            install_duckdb(release)?;
+        }
+        Some(("update", _)) => {
+            let latest_version = latest_stable_release()?;
+
+            let available_versions = duckdb_versions()?;
+
+            let release = available_versions
+                .get_release_by_tag(&latest_version)
                 .context("err")?;
 
             install_duckdb(release)?;
