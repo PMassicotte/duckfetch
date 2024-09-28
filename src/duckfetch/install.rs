@@ -60,7 +60,7 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     // Check if the requested version exists in the available versions
     if !available_versions.contains_version(&requested_release.tag_name) {
         eprintln!(
-            "Error: Requested DuckDB version '{}' is not available. Choose one of the folowing:",
+            "Error: Requested DuckDB version '{}' is not available. Choose one of the following:",
             requested_release.tag_name
         );
 
