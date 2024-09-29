@@ -21,7 +21,11 @@ use std::path::PathBuf;
 fn get_dest_dir() -> Result<PathBuf> {
     let home_dir = home_dir().context("Could not find the home directory")?;
     let dest_dir = if cfg!(target_os = "windows") {
-        home_dir.join("AppData").join("Local").join("bin")
+        home_dir
+            .join("AppData")
+            .join("Local")
+            .join("Programs")
+            .join("Duckdb")
     } else {
         home_dir.join(".local").join("bin")
     };
@@ -50,7 +54,7 @@ fn install(temp_unzip_dir: &Path, dest_path: &Path) -> Result<()> {
 
         if file_name_str == "duckdb" || file_name_str == "duckdb.exe" {
             let src = entry.path();
-            let dest = Path::new(dest_path).join("duckdb");
+            let dest = Path::new(dest_path).join(file_name_str.to_string());
             fs::rename(&src, &dest).context("Failed to move DuckDB binary")?;
             found = true;
             break;
