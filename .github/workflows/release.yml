@@ -1,10 +1,10 @@
 name: Build Binaries
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*" # Only trigger when creating a tag
-
 jobs:
   build:
     name: Build and Release Binaries
