@@ -46,7 +46,7 @@ mod tests {
 
         let tag_name = "v0.2.7";
 
-        let release = releases.get_release_by_tag(tag_name).unwrap();
+        let release = releases.release_by_tag(tag_name).unwrap();
 
         let result = download_duckdb(release);
 

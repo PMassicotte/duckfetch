@@ -71,7 +71,7 @@ impl ReleaseCollection {
     }
 
     /// Gets a release by its tag name.
-    pub fn get_release_by_tag(&self, tag_name: &str) -> Option<&Release> {
+    pub fn release_by_tag(&self, tag_name: &str) -> Option<&Release> {
         self.releases
             .iter()
             .find(|release| release.tag_name == tag_name)

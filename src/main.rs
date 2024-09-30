@@ -48,7 +48,7 @@ fn main() -> Result<()> {
             .context("Error")?;
 
             let release = available_versions
-                .get_release_by_tag(&selected_tag)
+                .release_by_tag(&selected_tag)
                 .context("Can not find the specified tag version")?;
 
             install_duckdb(release)?;
@@ -59,7 +59,7 @@ fn main() -> Result<()> {
             let available_versions = duckdb_versions()?;
 
             let release = available_versions
-                .get_release_by_tag(&latest_version)
+                .release_by_tag(&latest_version)
                 .context("err")?;
 
             install_duckdb(release)?;
