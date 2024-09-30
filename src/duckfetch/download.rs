@@ -35,21 +35,27 @@ pub fn download_duckdb(release: &Release) -> Result<(PathBuf, TempDir)> {
     Ok((temp_file_path, temp_dir))
 }
 
-// #[cfg(test)]
-// // mod tests {
-//     use super::*;
-//
-//     #[test]
-//     fn test_download_duckdb() {
-//         let version = "v0.2.7";
-//         let result = download_duckdb(version);
-//
-//         assert!(result.is_ok());
-//
-//         let (path, temp_dir) = result.unwrap();
-//         assert!(path.exists());
-//
-//         // Clean up the temporary directory
-//         drop(temp_dir);
-//     }
-// }
+#[cfg(test)]
+mod tests {
+    use super::download_duckdb;
+    use crate::duckdb_versions;
+
+    #[test]
+    fn test_download_duckdb() {
+        let releases = duckdb_versions().unwrap();
+
+        let tag_name = "v0.2.7";
+
+        let release = releases.get_release_by_tag(tag_name).unwrap();
+
+        let result = download_duckdb(release);
+
+        assert!(result.is_ok());
+
+        let (path, temp_dir) = result.unwrap();
+
+        assert!(path.exists());
+
+        drop(temp_dir);
+    }
+}
