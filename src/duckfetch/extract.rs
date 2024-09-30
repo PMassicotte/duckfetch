@@ -16,9 +16,12 @@ use zip::read::ZipArchive;
 /// * `Result<()>` - An empty result if successful, or an error if extraction fails.
 pub fn extract_zip(file_path: PathBuf, output_dir: &Path) -> Result<()> {
     let file = File::open(&file_path).context("Failed to open zip file")?;
+
     let mut archive = ZipArchive::new(file).context("Failed to read zip archive")?;
 
-    // Not super happy with this. Find a better way to direcly find the duckdb binary file
+    // Not super happy with this. Find a better way to direcly find the duckdb binary file. At the
+    // moment, use the archive lenght (i.e number of zipped files) to determine that we are dealing
+    // with the nightly zip.
     match archive.len() {
         // For the stable release
         1 => {
