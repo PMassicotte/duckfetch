@@ -49,7 +49,7 @@ fn main() -> Result<()> {
 
             let release = available_versions
                 .get_release_by_tag(&selected_tag)
-                .context("err")?;
+                .context("Can not find the specified tag version")?;
 
             install_duckdb(release)?;
         }
