@@ -70,32 +70,31 @@ fn install(temp_unzip_dir: &Path, dest_path: &Path) -> Result<()> {
     Ok(())
 }
 
-/// Installs the specified version of DuckDB.
+/// Installs the specified DuckDB release.
 ///
 /// This function performs the following steps:
-/// 1. Retrieves the list of available DuckDB versions.
-/// 2. Checks if the requested version exists in the available versions.
-/// 3. Downloads the requested version of DuckDB.
-/// 4. Extracts the downloaded file.
-/// 5. Installs DuckDB to the user's local bin directory.
+/// 1. Checks if the requested DuckDB version is available.
+/// 2. Downloads the specified DuckDB version.
+/// 3. Extracts the downloaded file.
+/// 4. Determines the destination directory based on the platform.
+/// 5. Prompts the user to create the destination directory if it does not exist.
+/// 6. Installs DuckDB to the destination directory.
 ///
 /// # Arguments
 ///
-/// * `requested_version` - A string specifying the version of DuckDB to install.
+/// * `requested_release` - A reference to the `Release` struct representing the DuckDB version to be installed.
+///
+/// # Returns
+///
+/// * `Result<()>` - Returns `Ok(())` if the installation is successful, otherwise returns an error.
 ///
 /// # Errors
 ///
 /// This function will return an error if:
-/// - The list of available DuckDB versions cannot be retrieved.
-/// - The requested version is not found in the available versions.
-/// - The DuckDB download fails.
-/// - The downloaded file cannot be extracted.
-/// - The home directory cannot be found.
-/// - The installation process fails.
-///
-/// # Returns
-///
-/// This function returns `Ok(())` if the installation completes successfully.
+/// * The requested DuckDB version is not available.
+/// * The download or extraction of the DuckDB version fails.
+/// * The destination directory cannot be created.
+/// * The installation process fails.
 pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     let available_versions = duckdb_versions()?;
 
