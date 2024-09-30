@@ -6,6 +6,7 @@ use clap::{command, Command};
 /// - `list`: Lists all available DuckDB versions.
 /// - `check`: Compares the installed version of DuckDB with the latest release.
 /// - `install`: Installs a specific version of DuckDB given a proposed list of releases.
+/// - `update`: Install the latest version of DuckDB.
 ///
 /// # Returns
 ///

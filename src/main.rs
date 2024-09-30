@@ -5,6 +5,7 @@
 //! - `list`: Lists the available DuckDB versions.
 //! - `check`: Checks the current setup.
 //! - `install`: Prompts the user to select a DuckDB version to install and installs it.
+//! - `update`: Install the latest version of DuckDB.
 //!
 //! The main function builds the command-line interface (CLI) using `build_cli` and
 //! matches the subcommands provided by the user to perform the corresponding actions.
