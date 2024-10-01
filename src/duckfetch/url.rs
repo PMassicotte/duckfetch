@@ -1,4 +1,5 @@
 #[derive(Debug, PartialEq)]
+/// Supported platforms.
 enum Platform {
     Windows,
     MacOs,
@@ -6,6 +7,7 @@ enum Platform {
 }
 
 #[derive(Debug, PartialEq)]
+/// Supported architectures.
 enum Architecture {
     Amd64,
     Arm64,
@@ -13,12 +15,14 @@ enum Architecture {
 }
 
 #[derive(Debug, PartialEq)]
+/// Build types.
 enum BuildType<'a> {
-    Stable(&'a str), // The tag name for stable builds
-    Nightly,         // Nightly builds without a tag
+    Stable(&'a str),
+    Nightly,
 }
 
 trait AsStr {
+    /// Converts the enum variant to its corresponding string representation.
     fn as_str(&self) -> &'static str;
 }
 
@@ -42,6 +46,7 @@ impl AsStr for Architecture {
     }
 }
 
+/// Determines the current platform.
 fn platform() -> Platform {
     if cfg!(target_os = "windows") {
         Platform::Windows
@@ -54,6 +59,7 @@ fn platform() -> Platform {
     }
 }
 
+/// Determines the architecture based on the platform.
 fn architecture(platform: &Platform) -> Architecture {
     match (
         cfg!(target_arch = "x86_64"),
@@ -68,6 +74,15 @@ fn architecture(platform: &Platform) -> Architecture {
     }
 }
 
+/// Constructs the URL for downloading the specified build.
+///
+/// # Arguments
+///
+/// * `tag_name` - The tag name of the build. Use "Nightly" for nightly builds.
+///
+/// # Returns
+///
+/// * `String` - The URL for downloading the specified build.
 pub fn build(tag_name: &str) -> String {
     const BASE_URL: &str = "https://github.com/duckdb/duckdb/releases/download/";
     const NIGHTLY_URL: &str = "https://artifacts.duckdb.org/latest/duckdb-binaries-";
