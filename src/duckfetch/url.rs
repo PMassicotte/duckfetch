@@ -99,21 +99,6 @@ pub fn build(tag_name: &str) -> String {
     }
 }
 
-// ** Stable builds **
-//
-// https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-windows-amd64.zip
-// https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-windows-arm64.zip
-// https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-osx-universal.zip
-// https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-linux-amd64.zip
-// https://github.com/duckdb/duckdb/releases/download/v1.1.1/duckdb_cli-linux-arm64.zip
-//
-// ** Nightly builds **
-//
-// https://artifacts.duckdb.org/latest/duckdb-binaries-windows.zip
-// https://artifacts.duckdb.org/latest/duckdb-binaries-osx.zip
-// https://artifacts.duckdb.org/latest/duckdb-binaries-linux.zip
-// https://artifacts.duckdb.org/latest/duckdb-binaries-linux-aarch64.zip
-
 #[cfg(test)]
 mod tests {
     use super::build;
