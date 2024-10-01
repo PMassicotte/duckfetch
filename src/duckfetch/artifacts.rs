@@ -53,3 +53,76 @@ impl ArtifactsResponse {
         Ok(created_at)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn test_new() {
+        // Mock the API response
+        let mock_response = json!({
+            "artifacts": [
+                {
+                    "name": "duckdb-binaries-linux",
+                    "created_at": "2023-01-01T00:00:00Z"
+                },
+                {
+                    "name": "other-artifact",
+                    "created_at": "2023-01-02T00:00:00Z"
+                }
+            ]
+        });
+
+        // Deserialize the mock response
+        let artifacts_response: ArtifactsResponse = serde_json::from_value(mock_response).unwrap();
+
+        // Check that the deserialization was successful
+        assert_eq!(artifacts_response.artifacts.len(), 2);
+        assert_eq!(
+            artifacts_response.artifacts[0].name,
+            "duckdb-binaries-linux"
+        );
+        assert_eq!(
+            artifacts_response.artifacts[0].created_at,
+            "2023-01-01T00:00:00Z"
+        );
+    }
+
+    #[test]
+    fn test_latest_nightly_date() {
+        // Mock the artifact list
+        let artifacts = vec![
+            Artifacts {
+                name: "duckdb-binaries-linux".to_string(),
+                created_at: "2023-01-01T00:00:00Z".to_string(),
+            },
+            Artifacts {
+                name: "other-artifact".to_string(),
+                created_at: "2023-01-02T00:00:00Z".to_string(),
+            },
+        ];
+
+        let artifacts_response = ArtifactsResponse { artifacts };
+
+        // Check that the latest nightly date is correct
+        let result = artifacts_response.latest_nightly_date().unwrap();
+        assert_eq!(result, "2023-01-01T00:00:00Z");
+    }
+
+    #[test]
+    fn test_latest_nightly_date_no_match() {
+        // Mock the artifact list with no matching artifacts
+        let artifacts = vec![Artifacts {
+            name: "other-artifact".to_string(),
+            created_at: "2023-01-02T00:00:00Z".to_string(),
+        }];
+
+        let artifacts_response = ArtifactsResponse { artifacts };
+
+        // Check that the function returns an error when no matching artifact is found
+        let result = artifacts_response.latest_nightly_date();
+        assert!(result.is_err());
+    }
+}
