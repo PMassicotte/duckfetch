@@ -1,4 +1,6 @@
+use clap::Arg;
 use clap::{command, Command};
+use clap_complete::Shell;
 
 /// Builds the command-line interface (CLI) for the DuckDB utility.
 ///
@@ -11,6 +13,7 @@ use clap::{command, Command};
 /// # Returns
 ///
 /// A `Command` object representing the CLI configuration.
+
 pub fn build_cli() -> Command {
     command!()
         .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
@@ -23,4 +26,14 @@ pub fn build_cli() -> Command {
                 .about("Installs a specific version of DuckDB given a proposed list of releases"),
         )
         .subcommand(Command::new("update").about("Update DuckDB to the latest version"))
+        .subcommand(
+            Command::new("completions")
+                .about("Generate autocompletion for a specified shell")
+                .arg(
+                    Arg::new("shell")
+                        .help("The shell to generate completions for")
+                        .required(true)
+                        .value_parser(clap::builder::EnumValueParser::<Shell>::new()),
+                ),
+        )
 }

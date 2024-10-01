@@ -1,6 +1,6 @@
 [package]
 name = "duckfetch"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 authors = ["Philippe Massicotte <pmassicotte@hotmail.com>"]
 description = "A CLI tool for managing DuckDB installations, enabling users to easily list available versions and install specific ones."
@@ -15,6 +15,7 @@ categories = ["command-line-interface"]
 [dependencies]
 anyhow = "1.0"
 clap = { version = "4.5", features = ["cargo"] }
+clap_complete = "4.5.29"
 dirs = "5"
 inquire = "0.7"
 reqwest = { version = "0.12", features = ["blocking", "json"] }

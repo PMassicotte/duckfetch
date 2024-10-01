@@ -63,6 +63,22 @@ For more information, use the `--help` flag:
 duckfetch install --help
 ```
 
+## Autocompletion
+
+To enable autocompletion, you can use the `completions` subcommand to generate the completion script for your shell. For example, to enable completions for the `zsh` shell:
+
+```bash
+duckfetch completions zsh > ~/.zfunc/_duckfetch
+```
+
+Then, add the following line to your `.zshrc` file:
+
+```bash
+fpath+=~/.zfunc
+autoload -Uz compinit
+compinit -i
+```
+
 ## Other related projects
 
 - https://github.com/NiclasHaderer/duckdb-version-manager

@@ -14,6 +14,7 @@ mod duckfetch;
 
 use duckfetch::build_cli;
 use duckfetch::check;
+use duckfetch::completion::generate_completions;
 use duckfetch::duckdb_versions;
 use duckfetch::install_duckdb;
 
@@ -63,6 +64,9 @@ fn main() -> Result<()> {
                 .context("err")?;
 
             install_duckdb(release)?;
+        }
+        Some(("completions", _)) => {
+            generate_completions();
         }
         _ => {
             app.print_help()?;

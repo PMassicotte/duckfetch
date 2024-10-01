@@ -1,4 +1,5 @@
 pub mod cli;
+pub mod completion;
 pub mod download;
 pub mod extract;
 pub mod install;
