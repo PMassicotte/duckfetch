@@ -10,9 +10,10 @@ A simple (**very experimental**) Rust application to manage DuckDB installations
 
 ## Features
 
-- List available DuckDB versions from GitHub releases.
-- Install a specific DuckDB version.
-- Automatically download and extract the selected version.
+- List available DuckDB versions from GitHub releases with `duckfetch list`.
+- Install a specific DuckDB version with `duckfetch install`.
+- Update to the latest version with `duckfetch update`.
+- Generate auto-completion scripts for your shell with `duckfetch completions`.
 
 ## Requirements
 
