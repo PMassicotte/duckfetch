@@ -35,7 +35,7 @@ impl ArtifactsResponse {
         Ok(response)
     }
 
-    /// Finds the creation date of the latest nightly artifact with the name containing 'duckdb-binaries-linux'. This is assuming that the first "artifactf" is the latest produced.
+    /// Find the creation date of the most recent nightly artifact with a name containing 'duckdb-binaries-linux'. This assumes that the first artifact is the most recently produced.
     ///
     /// # Returns
     ///
