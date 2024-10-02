@@ -4,6 +4,20 @@
 
 A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Check the currently installed DuckDB version](#check-the-currently-installed-duckdb-version)
+  - [List available DuckDB versions](#list-available-duckdb-versions)
+  - [Install DuckDB](#install-duckdb)
+- [Help](#help)
+- [Autocompletion](#autocompletion)
+- [Other related projects](#other-related-projects)
+
 ## Demo
 
 ![Demo](./assets/demo.gif)
