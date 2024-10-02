@@ -12,6 +12,7 @@
 
 mod duckfetch;
 
+use duckfetch::artifacts::ArtifactsResponse;
 use duckfetch::build_cli;
 use duckfetch::check;
 use duckfetch::completion::generate_completions;
