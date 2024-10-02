@@ -1,78 +1,4 @@
-#[derive(Debug, PartialEq)]
-/// Supported platforms.
-enum Platform {
-    Windows,
-    MacOs,
-    Linux,
-}
-
-#[derive(Debug, PartialEq)]
-/// Supported architectures.
-enum Architecture {
-    Amd64,
-    Arm64,
-    Universal, // Added Universal architecture for MacOS
-}
-
-#[derive(Debug, PartialEq)]
-/// Build types.
-enum BuildType<'a> {
-    Stable(&'a str),
-    Nightly,
-}
-
-trait AsStr {
-    /// Converts the enum variant to its corresponding string representation.
-    fn as_str(&self) -> &'static str;
-}
-
-impl AsStr for Platform {
-    fn as_str(&self) -> &'static str {
-        match self {
-            Platform::Windows => "windows",
-            Platform::MacOs => "osx",
-            Platform::Linux => "linux",
-        }
-    }
-}
-
-impl AsStr for Architecture {
-    fn as_str(&self) -> &'static str {
-        match self {
-            Architecture::Amd64 => "amd64",
-            Architecture::Arm64 => "arm64",
-            Architecture::Universal => "universal",
-        }
-    }
-}
-
-/// Determines the current platform.
-fn platform() -> Platform {
-    if cfg!(target_os = "windows") {
-        Platform::Windows
-    } else if cfg!(target_os = "macos") {
-        Platform::MacOs
-    } else if cfg!(target_os = "linux") {
-        Platform::Linux
-    } else {
-        panic!("Unsupported platform!")
-    }
-}
-
-/// Determines the architecture based on the platform.
-fn architecture(platform: &Platform) -> Architecture {
-    match (
-        cfg!(target_arch = "x86_64"),
-        cfg!(target_arch = "aarch64"),
-        platform,
-    ) {
-        (true, _, Platform::MacOs) => Architecture::Universal,
-        (true, _, _) => Architecture::Amd64,
-        (_, true, Platform::MacOs) => Architecture::Universal,
-        (_, true, _) => Architecture::Arm64,
-        _ => panic!("Unsupported architecture!"),
-    }
-}
+use crate::duckfetch::target::*;
 
 /// Constructs the URL for downloading the specified build.
 ///
@@ -93,22 +19,22 @@ pub fn build(tag_name: &str) -> String {
         BuildType::Stable(tag_name)
     };
 
-    let platform = platform();
-    let architecture = architecture(&platform);
+    // TODO: Should be passed as reference
+    let target = Target::new();
 
     match build_type {
         BuildType::Stable(tag_name) => format!(
             "{}{}/duckdb_cli-{}-{}.zip",
             BASE_URL,
             tag_name,
-            platform.as_str(),
-            architecture.as_str()
+            target.platform.as_str(),
+            target.architecture.as_str()
         ),
         BuildType::Nightly => {
-            if platform == Platform::Linux && architecture == Architecture::Arm64 {
+            if target.platform == Platform::Linux && target.architecture == Architecture::Arm64 {
                 format!("{}linux-aarch64.zip", NIGHTLY_URL)
             } else {
-                format!("{}{}.zip", NIGHTLY_URL, platform.as_str())
+                format!("{}{}.zip", NIGHTLY_URL, target.platform.as_str())
             }
         }
     }

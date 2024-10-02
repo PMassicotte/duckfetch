@@ -1,63 +1,71 @@
+use crate::duckfetch::target::Target;
+use crate::duckfetch::version::Release;
 use anyhow::{Context, Result};
 use std::fs::File;
+use std::io::Cursor;
 use std::path::{Path, PathBuf};
-use tempfile::tempdir;
 use zip::read::ZipArchive;
 
-/// Extracts a ZIP file to the specified output directory.
-///
-/// # Arguments
-///
-/// * `file_path` - A `PathBuf` representing the path to the ZIP file.
-/// * `output_dir` - A `Path` representing the path to the output directory.
-///
-/// # Returns
-///
-/// * `Result<()>` - An empty result if successful, or an error if extraction fails.
-pub fn extract_zip(file_path: PathBuf, output_dir: &Path) -> Result<()> {
+use super::target::{Architecture, Platform};
+
+fn target_zip_file(target: &Target, release: &Release) -> String {
+    let is_nightly = !release.tag_name.starts_with("v");
+
+    match (target.platform, target.architecture) {
+        (Platform::Windows, Architecture::Amd64) => "duckdb_cli-windows-amd64.zip",
+        (Platform::Windows, Architecture::Arm64) => "duckdb_cli-windows-arm64.zip",
+        (Platform::MacOs, Architecture::Universal) => "duckdb_cli-osx-universal.zip",
+        (Platform::Linux, Architecture::Amd64) => "duckdb_cli-linux-amd64.zip",
+        (Platform::Linux, Architecture::Arm64) if is_nightly => "duckdb_cli-linux-aarch64.zip", // Specific for nightly
+        (Platform::Linux, Architecture::Arm64) => "duckdb_cli-linux-arm64.zip",
+        _ => panic!("Unsupported platform or architecture!"),
+    }
+    .to_string()
+}
+
+pub fn extract_cli(
+    file_path: PathBuf,
+    output_dir: &Path,
+    release: &Release,
+    target: &Target,
+) -> Result<()> {
+    let target_zip = target_zip_file(target, release);
+
+    let downloaded_filename = file_path.file_name().unwrap().to_str().unwrap();
+
     let file = File::open(&file_path).context("Failed to open zip file")?;
 
     let mut archive = ZipArchive::new(file).context("Failed to read zip archive")?;
 
-    // Not super happy with this. Find a better way to direcly find the duckdb binary file. At the
-    // moment, use the archive lenght (i.e number of zipped files) to determine that we are dealing
-    // with the nightly zip.
-    match archive.len() {
-        // For the stable release
-        1 => {
-            archive
-                .extract(output_dir)
-                .context("Failed to extract zip archive")?;
-            Ok(())
-        }
-        // For the nightly release because it contains nested zip files
-        2 => {
-            let mut nested_zip = archive
-                .by_name("duckdb_cli-linux-amd64.zip")
-                .context("Failed to find the specified file in the archive")?;
+    // Occuring when reading a stable build zip, this contains only one binary
+    if target_zip == downloaded_filename {
+        println!("Extracting the main zip file...");
 
-            let temp_dir = tempdir().context("Failed to create temporary directory")?;
-
-            let temp_zip_path = temp_dir.path().join("duckdb.zip");
-
-            let mut temp_zip_file =
-                File::create(&temp_zip_path).context("Failed to create temporary zip file")?;
-
-            std::io::copy(&mut nested_zip, &mut temp_zip_file)
-                .context("Failed to copy contents to temporary zip file")?;
-
-            let nested_file =
-                File::open(&temp_zip_path).context("Failed to open nested zip file")?;
-
-            let mut nested_archive =
-                ZipArchive::new(nested_file).context("Failed to read nested zip archive")?;
-
-            nested_archive
-                .extract(output_dir)
-                .context("Failed to extract nested zip archive")?;
-
-            Ok(())
-        }
-        _ => Err(anyhow::anyhow!("Invalid zip file")),
+        archive
+            .extract(output_dir)
+            .context("Failed to extract the main zip file")?;
     }
+    // When reading a nightly build, we need to obtain the correct embedded zip file that contains
+    // the binary to use.
+    else {
+        let mut file_in_zip = archive
+            .by_name(&target_zip)
+            .context("Could not find the requested zip file inside the downloaded file")?;
+
+        let mut buffer = Vec::new();
+
+        std::io::copy(&mut file_in_zip, &mut buffer)
+            .context("Failed to copy nested zip file to buffer")?;
+
+        let cursor = Cursor::new(buffer);
+
+        let mut nested_archive =
+            ZipArchive::new(cursor).context("Failed to read nested zip archive")?;
+
+        nested_archive
+            .extract(output_dir)
+            .context("Failed to extract the nested zip file")?;
+    }
+
+    Ok(())
 }

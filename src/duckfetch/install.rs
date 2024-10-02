@@ -1,6 +1,7 @@
 use crate::duckfetch::download_duckdb;
 use crate::duckfetch::duckdb_versions;
-use crate::duckfetch::extract_zip;
+use crate::duckfetch::extract_cli;
+use crate::duckfetch::target::Target;
 use crate::duckfetch::version::Release;
 use anyhow::Ok;
 use anyhow::{Context, Result};
@@ -124,7 +125,13 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
 
     let temp_dir_str = temp_dir.path();
 
-    extract_zip(downloaded_file, temp_dir_str)?;
+    // Extract the DuckDB cli in a temporary folder
+    extract_cli(
+        downloaded_file,
+        temp_dir_str,
+        requested_release,
+        &Target::new(),
+    )?;
 
     // Determine the destination path based on the platform
     let dest_dir = get_dest_dir()?;
