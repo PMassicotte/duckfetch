@@ -1,4 +1,5 @@
 use clap::Arg;
+use clap::ColorChoice;
 use clap::{command, Command};
 use clap_complete::Shell;
 
@@ -36,4 +37,5 @@ pub fn build_cli() -> Command {
                         .value_parser(clap::builder::EnumValueParser::<Shell>::new()),
                 ),
         )
+        .color(ColorChoice::Auto)
 }
