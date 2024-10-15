@@ -21,6 +21,7 @@ use duckfetch::install_duckdb;
 
 use anyhow::{Context, Result};
 use duckfetch::version::latest_stable_release;
+use webbrowser;
 
 fn main() -> Result<()> {
     // Not ready yet for Windows
@@ -65,6 +66,10 @@ fn main() -> Result<()> {
                 .context("err")?;
 
             install_duckdb(release)?;
+        }
+        Some(("changelog", _)) => {
+            webbrowser::open("https://github.com/duckdb/duckdb/releases")
+                .context("Could not open the release web page")?;
         }
         Some(("completions", _)) => {
             generate_completions();

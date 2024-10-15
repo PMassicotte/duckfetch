@@ -70,6 +70,14 @@ This command will print the available versions and ask the user to select one to
 duckfetch install
 ```
 
+### Open the change log of the latest version
+
+This will open the GitHub release page for the latest version in your default browser.
+
+```bash
+duckfetch changelog
+```
+
 ## Help
 
 For more information, use the `--help` flag:

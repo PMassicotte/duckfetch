@@ -28,6 +28,10 @@ pub fn build_cli() -> Command {
         )
         .subcommand(Command::new("update").about("Update DuckDB to the latest version"))
         .subcommand(
+            Command::new("changelog")
+                .about("Open the release changelog in the default web browser"),
+        )
+        .subcommand(
             Command::new("completions")
                 .about("Generate autocompletion for a specified shell")
                 .arg(

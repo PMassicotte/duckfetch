@@ -1,6 +1,6 @@
 [package]
 name = "duckfetch"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2021"
 authors = ["Philippe Massicotte <pmassicotte@hotmail.com>"]
 description = "A CLI tool for managing DuckDB installations, enabling users to easily list available versions and install specific ones."
@@ -22,6 +22,7 @@ reqwest = { version = "0.12", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 tempfile = "3"
+webbrowser = "1.0.2"
 zip = "2"
 
 [profile.release]
