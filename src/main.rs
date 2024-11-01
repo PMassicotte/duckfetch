@@ -21,7 +21,6 @@ use duckfetch::install_duckdb;
 
 use anyhow::{Context, Result};
 use duckfetch::version::latest_stable_release;
-use webbrowser;
 
 fn main() -> Result<()> {
     // Not ready yet for Windows
