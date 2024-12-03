@@ -44,9 +44,9 @@ impl ArtifactsResponse {
         let created_at = self
             .artifacts
             .iter()
-            .find(|artifact| artifact.name.contains("duckdb-binaries-linux")) // The
+            .find(|artifact| artifact.name.contains("binaries")) // The
             // find() function return the first find
-            .context("No artifact found with name containing 'duckdb-binaries-linux'")?
+            .context("Could not find the creation date of the latest nightly build")?
             .created_at
             .clone();
 
