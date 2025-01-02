@@ -14,7 +14,6 @@ use clap_complete::Shell;
 /// # Returns
 ///
 /// A `Command` object representing the CLI configuration.
-
 pub fn build_cli() -> Command {
     command!()
         .subcommand(Command::new("list").about("Lists all available DuckDB versions"))
