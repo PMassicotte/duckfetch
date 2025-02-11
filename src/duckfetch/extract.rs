@@ -37,7 +37,7 @@ pub fn extract_cli(
 
     let mut archive = ZipArchive::new(file).context("Failed to read zip archive")?;
 
-    // Occuring when reading a stable build zip, this contains only one binary
+    // Occurring when reading a stable build zip, this contains only one binary
     if target_zip == downloaded_filename {
         println!("Extracting the main zip file...");
 
@@ -48,9 +48,10 @@ pub fn extract_cli(
     // When reading a nightly build, we need to obtain the correct embedded zip file that contains
     // the binary to use.
     else {
-        let mut file_in_zip = archive
-            .by_name(&target_zip)
-            .context("Could not find the requested zip file inside the downloaded file")?;
+        let mut file_in_zip = archive.by_name(&target_zip).context(format!(
+            "The file '{}' was not found inside '{}'. It may not have been built yet.",
+            target_zip, downloaded_filename
+        ))?;
 
         let mut buffer = Vec::new();
 
