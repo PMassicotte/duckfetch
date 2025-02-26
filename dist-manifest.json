@@ -1,0 +1,444 @@
+{
+  "dist_version": "0.28.0",
+  "announcement_tag": "v0.3.5",
+  "announcement_tag_is_implicit": false,
+  "announcement_is_prerelease": false,
+  "announcement_title": "v0.3.5",
+  "announcement_github_body": "## Install duckfetch 0.3.5\n\n### Install prebuilt binaries via shell script\n\n```sh\ncurl --proto '=https' --tlsv1.2 -LsSf https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-installer.sh | sh\n```\n\n### Install prebuilt binaries via powershell script\n\n```sh\npowershell -ExecutionPolicy Bypass -c \"irm https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-installer.ps1 | iex\"\n```\n\n## Download duckfetch 0.3.5\n\n|  File  | Platform | Checksum |\n|--------|----------|----------|\n| [duckfetch-aarch64-apple-darwin.tar.gz](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-apple-darwin.tar.gz) | Apple Silicon macOS | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-apple-darwin.tar.gz.sha256) |\n| [duckfetch-x86_64-apple-darwin.tar.gz](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-apple-darwin.tar.gz) | Intel macOS | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-apple-darwin.tar.gz.sha256) |\n| [duckfetch-aarch64-pc-windows-msvc.zip](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-pc-windows-msvc.zip) | ARM64 Windows | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-pc-windows-msvc.zip.sha256) |\n| [duckfetch-x86_64-pc-windows-msvc.zip](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-pc-windows-msvc.zip) | x64 Windows | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-pc-windows-msvc.zip.sha256) |\n| [duckfetch-aarch64-unknown-linux-gnu.tar.gz](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-unknown-linux-gnu.tar.gz) | ARM64 Linux | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-aarch64-unknown-linux-gnu.tar.gz.sha256) |\n| [duckfetch-x86_64-unknown-linux-gnu.tar.gz](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-unknown-linux-gnu.tar.gz) | x64 Linux | [checksum](https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-x86_64-unknown-linux-gnu.tar.gz.sha256) |\n\n",
+  "releases": [
+    {
+      "app_name": "duckfetch",
+      "app_version": "0.3.5",
+      "env": {
+        "install_dir_env_var": "DUCKFETCH_INSTALL_DIR",
+        "unmanaged_dir_env_var": "DUCKFETCH_UNMANAGED_INSTALL",
+        "disable_update_env_var": "DUCKFETCH_DISABLE_UPDATE",
+        "no_modify_path_env_var": "DUCKFETCH_NO_MODIFY_PATH",
+        "github_base_url_env_var": "DUCKFETCH_INSTALLER_GITHUB_BASE_URL",
+        "ghe_base_url_env_var": "DUCKFETCH_INSTALLER_GHE_BASE_URL"
+      },
+      "display_name": "duckfetch",
+      "display": true,
+      "artifacts": [
+        "source.tar.gz",
+        "source.tar.gz.sha256",
+        "duckfetch-installer.sh",
+        "duckfetch-installer.ps1",
+        "sha256.sum",
+        "duckfetch-aarch64-apple-darwin.tar.gz",
+        "duckfetch-aarch64-apple-darwin.tar.gz.sha256",
+        "duckfetch-aarch64-pc-windows-msvc.zip",
+        "duckfetch-aarch64-pc-windows-msvc.zip.sha256",
+        "duckfetch-aarch64-unknown-linux-gnu.tar.gz",
+        "duckfetch-aarch64-unknown-linux-gnu.tar.gz.sha256",
+        "duckfetch-x86_64-apple-darwin.tar.gz",
+        "duckfetch-x86_64-apple-darwin.tar.gz.sha256",
+        "duckfetch-x86_64-pc-windows-msvc.zip",
+        "duckfetch-x86_64-pc-windows-msvc.zip.sha256",
+        "duckfetch-x86_64-unknown-linux-gnu.tar.gz",
+        "duckfetch-x86_64-unknown-linux-gnu.tar.gz.sha256"
+      ],
+      "hosting": {
+        "github": {
+          "artifact_base_url": "https://github.com",
+          "artifact_download_path": "/pmassicotte/duckfetch/releases/download/v0.3.5",
+          "owner": "pmassicotte",
+          "repo": "duckfetch"
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "duckfetch-aarch64-apple-darwin.tar.gz": {
+      "name": "duckfetch-aarch64-apple-darwin.tar.gz",
+      "kind": "executable-zip",
+      "target_triples": [
+        "aarch64-apple-darwin"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-aarch64-apple-darwin-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-aarch64-apple-darwin.tar.gz.sha256"
+    },
+    "duckfetch-aarch64-apple-darwin.tar.gz.sha256": {
+      "name": "duckfetch-aarch64-apple-darwin.tar.gz.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "aarch64-apple-darwin"
+      ]
+    },
+    "duckfetch-aarch64-pc-windows-msvc.zip": {
+      "name": "duckfetch-aarch64-pc-windows-msvc.zip",
+      "kind": "executable-zip",
+      "target_triples": [
+        "aarch64-pc-windows-msvc"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-aarch64-pc-windows-msvc-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch.exe",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-aarch64-pc-windows-msvc.zip.sha256"
+    },
+    "duckfetch-aarch64-pc-windows-msvc.zip.sha256": {
+      "name": "duckfetch-aarch64-pc-windows-msvc.zip.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "aarch64-pc-windows-msvc"
+      ]
+    },
+    "duckfetch-aarch64-unknown-linux-gnu.tar.gz": {
+      "name": "duckfetch-aarch64-unknown-linux-gnu.tar.gz",
+      "kind": "executable-zip",
+      "target_triples": [
+        "aarch64-unknown-linux-gnu"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-aarch64-unknown-linux-gnu-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-aarch64-unknown-linux-gnu.tar.gz.sha256"
+    },
+    "duckfetch-aarch64-unknown-linux-gnu.tar.gz.sha256": {
+      "name": "duckfetch-aarch64-unknown-linux-gnu.tar.gz.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "aarch64-unknown-linux-gnu"
+      ]
+    },
+    "duckfetch-installer.ps1": {
+      "name": "duckfetch-installer.ps1",
+      "kind": "installer",
+      "target_triples": [
+        "aarch64-pc-windows-gnu",
+        "aarch64-pc-windows-msvc",
+        "x86_64-pc-windows-gnu",
+        "x86_64-pc-windows-msvc"
+      ],
+      "install_hint": "powershell -ExecutionPolicy Bypass -c \"irm https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-installer.ps1 | iex\"",
+      "description": "Install prebuilt binaries via powershell script"
+    },
+    "duckfetch-installer.sh": {
+      "name": "duckfetch-installer.sh",
+      "kind": "installer",
+      "target_triples": [
+        "aarch64-apple-darwin",
+        "aarch64-pc-windows-gnu",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "x86_64-pc-windows-gnu",
+        "x86_64-unknown-linux-gnu"
+      ],
+      "install_hint": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pmassicotte/duckfetch/releases/download/v0.3.5/duckfetch-installer.sh | sh",
+      "description": "Install prebuilt binaries via shell script"
+    },
+    "duckfetch-x86_64-apple-darwin.tar.gz": {
+      "name": "duckfetch-x86_64-apple-darwin.tar.gz",
+      "kind": "executable-zip",
+      "target_triples": [
+        "x86_64-apple-darwin"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-x86_64-apple-darwin-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-x86_64-apple-darwin.tar.gz.sha256"
+    },
+    "duckfetch-x86_64-apple-darwin.tar.gz.sha256": {
+      "name": "duckfetch-x86_64-apple-darwin.tar.gz.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "x86_64-apple-darwin"
+      ]
+    },
+    "duckfetch-x86_64-pc-windows-msvc.zip": {
+      "name": "duckfetch-x86_64-pc-windows-msvc.zip",
+      "kind": "executable-zip",
+      "target_triples": [
+        "x86_64-pc-windows-msvc"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-x86_64-pc-windows-msvc-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch.exe",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-x86_64-pc-windows-msvc.zip.sha256"
+    },
+    "duckfetch-x86_64-pc-windows-msvc.zip.sha256": {
+      "name": "duckfetch-x86_64-pc-windows-msvc.zip.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "x86_64-pc-windows-msvc"
+      ]
+    },
+    "duckfetch-x86_64-unknown-linux-gnu.tar.gz": {
+      "name": "duckfetch-x86_64-unknown-linux-gnu.tar.gz",
+      "kind": "executable-zip",
+      "target_triples": [
+        "x86_64-unknown-linux-gnu"
+      ],
+      "assets": [
+        {
+          "name": "LICENSE-APACHE",
+          "path": "LICENSE-APACHE",
+          "kind": "license"
+        },
+        {
+          "name": "LICENSE-MIT",
+          "path": "LICENSE-MIT",
+          "kind": "license"
+        },
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "kind": "readme"
+        },
+        {
+          "id": "duckfetch-x86_64-unknown-linux-gnu-exe-duckfetch",
+          "name": "duckfetch",
+          "path": "duckfetch",
+          "kind": "executable"
+        }
+      ],
+      "checksum": "duckfetch-x86_64-unknown-linux-gnu.tar.gz.sha256"
+    },
+    "duckfetch-x86_64-unknown-linux-gnu.tar.gz.sha256": {
+      "name": "duckfetch-x86_64-unknown-linux-gnu.tar.gz.sha256",
+      "kind": "checksum",
+      "target_triples": [
+        "x86_64-unknown-linux-gnu"
+      ]
+    },
+    "sha256.sum": {
+      "name": "sha256.sum",
+      "kind": "unified-checksum"
+    },
+    "source.tar.gz": {
+      "name": "source.tar.gz",
+      "kind": "source-tarball",
+      "checksum": "source.tar.gz.sha256"
+    },
+    "source.tar.gz.sha256": {
+      "name": "source.tar.gz.sha256",
+      "kind": "checksum"
+    }
+  },
+  "systems": {
+    "host::all:": {
+      "id": "host::all:",
+      "cargo_version_line": "cargo 1.85.1 (d73d2caf9 2024-12-31)",
+      "build_environment": {
+        "linux": {
+          "glibc_version": {
+            "major": 2,
+            "series": 39
+          }
+        }
+      }
+    },
+    "host:upload,release:all:": {
+      "id": "host:upload,release:all:",
+      "cargo_version_line": "cargo 1.85.1 (d73d2caf9 2024-12-31)",
+      "build_environment": {
+        "linux": {
+          "glibc_version": {
+            "major": 2,
+            "series": 39
+          }
+        }
+      }
+    }
+  },
+  "publish_prereleases": false,
+  "force_latest": false,
+  "ci": {
+    "github": {
+      "artifacts_matrix": {
+        "include": [
+          {
+            "runner": "macos-13",
+            "host": "x86_64-apple-darwin",
+            "install_dist": {
+              "shell": "sh",
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.sh | sh"
+            },
+            "dist_args": "--artifacts=local --target=aarch64-apple-darwin",
+            "targets": [
+              "aarch64-apple-darwin"
+            ],
+            "cache_provider": "github"
+          },
+          {
+            "runner": "ubuntu-20.04",
+            "host": "x86_64-unknown-linux-gnu",
+            "container": {
+              "image": "messense/cargo-xwin",
+              "host": "x86_64-unknown-linux-musl",
+              "package_manager": "apt"
+            },
+            "install_dist": {
+              "shell": "sh",
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.sh | sh"
+            },
+            "dist_args": "--artifacts=local --target=aarch64-pc-windows-msvc",
+            "targets": [
+              "aarch64-pc-windows-msvc"
+            ],
+            "packages_install": "if ! command -v cargo-xwin > /dev/null 2>&1; then\n  if ! command -v pip3 > /dev/null 2>&1; then\n    dnf install --assumeyes python3-pip\n    pip3 install --upgrade pip\n  fi\n  pip3 install cargo-xwin\nfi",
+            "cache_provider": "github"
+          },
+          {
+            "runner": "ubuntu-20.04",
+            "host": "x86_64-unknown-linux-gnu",
+            "install_dist": {
+              "shell": "sh",
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.sh | sh"
+            },
+            "dist_args": "--artifacts=local --target=aarch64-unknown-linux-gnu",
+            "targets": [
+              "aarch64-unknown-linux-gnu"
+            ],
+            "packages_install": "if ! command -v cargo-zigbuild > /dev/null 2>&1; then\n  if ! command -v pip3 > /dev/null 2>&1; then\n    dnf install --assumeyes python3-pip\n    pip3 install --upgrade pip\n  fi\n  pip3 install cargo-zigbuild\nfi",
+            "cache_provider": "github"
+          },
+          {
+            "runner": "macos-13",
+            "host": "x86_64-apple-darwin",
+            "install_dist": {
+              "shell": "sh",
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.sh | sh"
+            },
+            "dist_args": "--artifacts=local --target=x86_64-apple-darwin",
+            "targets": [
+              "x86_64-apple-darwin"
+            ],
+            "cache_provider": "github"
+          },
+          {
+            "runner": "windows-2019",
+            "host": "x86_64-pc-windows-msvc",
+            "install_dist": {
+              "shell": "pwsh",
+              "run": "irm https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.ps1 | iex"
+            },
+            "dist_args": "--artifacts=local --target=x86_64-pc-windows-msvc",
+            "targets": [
+              "x86_64-pc-windows-msvc"
+            ],
+            "cache_provider": "github"
+          },
+          {
+            "runner": "ubuntu-20.04",
+            "host": "x86_64-unknown-linux-gnu",
+            "install_dist": {
+              "shell": "sh",
+              "run": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.28.0/cargo-dist-installer.sh | sh"
+            },
+            "dist_args": "--artifacts=local --target=x86_64-unknown-linux-gnu",
+            "targets": [
+              "x86_64-unknown-linux-gnu"
+            ],
+            "cache_provider": "github"
+          }
+        ]
+      },
+      "pr_run_mode": "plan"
+    }
+  },
+  "linkage": [],
+  "upload_files": []
+}
