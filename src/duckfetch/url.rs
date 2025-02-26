@@ -10,6 +10,7 @@ use crate::duckfetch::target::*;
 ///
 /// * `String` - The URL for downloading the specified build.
 pub fn build(tag_name: &str) -> String {
+    // see urls: https://duckdb.org/docs/installation
     const BASE_URL: &str = "https://github.com/duckdb/duckdb/releases/download/";
     const NIGHTLY_URL: &str = "https://artifacts.duckdb.org/latest/duckdb-binaries-";
 
@@ -31,11 +32,18 @@ pub fn build(tag_name: &str) -> String {
             target.architecture.as_str()
         ),
         BuildType::Nightly => {
-            if target.platform == Platform::Linux && target.architecture == Architecture::Arm64 {
-                format!("{}linux-aarch64.zip", NIGHTLY_URL)
-            } else {
-                format!("{}{}.zip", NIGHTLY_URL, target.platform.as_str())
-            }
+            let platform_suffix = match target.platform {
+                Platform::Linux => {
+                    if target.architecture == Architecture::Arm64 {
+                        "linux-arm64"
+                    } else {
+                        "linux-amd64"
+                    }
+                }
+                Platform::MacOs => "osx",
+                Platform::Windows => "windows",
+            };
+            format!("{}{}.zip", NIGHTLY_URL, platform_suffix)
         }
     }
 }
@@ -63,7 +71,7 @@ mod tests {
     fn test_nightly_linux_amd64() {
         assert_build(
             "Nightly",
-            "https://artifacts.duckdb.org/latest/duckdb-binaries-linux.zip",
+            "https://artifacts.duckdb.org/latest/duckdb-binaries-linux-amd64.zip",
         );
     }
 
