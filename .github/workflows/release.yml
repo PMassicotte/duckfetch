@@ -3,6 +3,12 @@ name: Build and Release
 on:
   release:
     types: [created]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  actions: read
 
 env:
   CARGO_TERM_COLOR: always
@@ -16,53 +22,51 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
           override: true
+
       - name: Build and Test
         run: |
           cargo build --release --verbose
           cargo test --release --verbose
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: duckfetch-${{ matrix.os }}
+          path: ./target/release/duckfetch*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    steps:
       - name: Create Release
-        if: github.event_name == 'release'
+        if: github.event_name == 'workflow_dispatch'
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
       - name: Upload Linux Binary
-        if: github.event_name == 'release' && matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/release/duckfetch
+          asset_path: ./duckfetch-ubuntu-latest/duckfetch
           asset_name: duckfetch-linux
-          asset_content_type: application/octet-stream
-      - name: Upload macOS Binary
-        if: github.event_name == 'release' && matrix.os == 'macos-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/release/duckfetch
-          asset_name: duckfetch-macos
-          asset_content_type: application/octet-stream
-      - name: Upload Windows Binary
-        if: github.event_name == 'release' && matrix.os == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/release/duckfetch.exe
-          asset_name: duckfetch-windows.exe
           asset_content_type: application/octet-stream
