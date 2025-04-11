@@ -28,7 +28,7 @@ pub fn build_cli() -> Command {
         .subcommand(Command::new("update").about("Update DuckDB to the latest version"))
         .subcommand(
             Command::new("changelog")
-                .about("Open the release changelog in the default web browser"),
+                .about("Open the release changelog of DuckDB in the default web browser"),
         )
         .subcommand(
             Command::new("completions")
