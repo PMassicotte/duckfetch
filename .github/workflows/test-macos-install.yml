@@ -26,4 +26,4 @@ jobs:
           DUCKFETCH_NON_INTERACTIVE: true
         run: |
           duckfetch update
-          ~/.duckdb/bin/duckdb --version
+          ~/.local/bin/duckdb --version
