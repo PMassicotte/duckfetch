@@ -1,4 +1,4 @@
-name: Test Linux Installation
+name: Test Windows Installation
 
 on:
   pull_request:
@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-linux:
-    name: Test Linux Installation
-    runs-on: ubuntu-latest
+  test-windows:
+    name: Test Windows Installation
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +24,7 @@ jobs:
       - name: Install DuckDB using duckfetch
         env:
           DUCKFETCH_NON_INTERACTIVE: true
+        shell: pwsh
         run: |
           duckfetch update
-          ~/.local/bin/duckdb --version
+          & "$env:USERPROFILE\.duckdb\bin\duckdb.exe" --version

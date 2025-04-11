@@ -23,12 +23,6 @@ use anyhow::{Context, Result};
 use duckfetch::version::latest_stable_release;
 
 fn main() -> Result<()> {
-    // Not ready yet for Windows
-    if cfg!(target_os = "windows") {
-        eprintln!("This CLI is not ready yet for Windows. Exiting.");
-        std::process::exit(1);
-    }
-
     let mut app = build_cli();
     let matches = app.get_matches_mut();
 

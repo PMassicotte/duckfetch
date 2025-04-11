@@ -27,11 +27,7 @@ fn is_non_interactive() -> bool {
 fn get_dest_dir() -> Result<PathBuf> {
     let home_dir = home_dir().context("Could not find the home directory")?;
     let dest_dir = if cfg!(target_os = "windows") {
-        home_dir
-            .join("AppData")
-            .join("Local")
-            .join("Programs")
-            .join("Duckdb")
+        home_dir.join(".duckdb").join("bin")
     } else {
         home_dir.join(".local").join("bin")
     };
