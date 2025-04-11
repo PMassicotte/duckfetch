@@ -1,0 +1,29 @@
+name: Test macOS Installation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-macos:
+    name: Test macOS Installation
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build and Install (x86_64)
+        run: |
+          cargo install --path .
+          duckfetch --version
+
+      - name: Install DuckDB using duckfetch
+        env:
+          DUCKFETCH_NON_INTERACTIVE: true
+        run: |
+          duckfetch update
+          ~/.duckdb/bin/duckdb --version
