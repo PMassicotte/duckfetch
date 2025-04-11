@@ -1,8 +1,8 @@
 # duckfetch: a DuckDB manager for Linux (maybe Windows and MacOS)
 
-[![Crates.io](https://img.shields.io/crates/v/duckfetch)](https://crates.io/crates/duckfetch) [![License](https://img.shields.io/badge/license-Apache%202.0%20%7C%20MIT-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Build Status](https://github.com/PMassicotte/duckfetch/actions/workflows/release.yml/badge.svg) ![Build Status](https://github.com/PMassicotte/duckfetch/actions/workflows/rust.yml/badge.svg)
+[![Crates.io](https://img.shields.io/crates/v/duckfetch)](https://crates.io/crates/duckfetch) [![License](https://img.shields.io/badge/license-Apache%202.0%20%7C%20MIT-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Build Status](https://github.com/PMassicotte/duckfetch/actions/workflows/release.yml/badge.svg) ![Build Status](https://github.com/PMassicotte/duckfetch/actions/workflows/rust.yml/badge.svg) [![Test Linux Installation](https://github.com/PMassicotte/duckfetch/actions/workflows/test-linux-install.yml/badge.svg)](https://github.com/PMassicotte/duckfetch/actions/workflows/test-linux-install.yml) [![Test macOS Installation](https://github.com/PMassicotte/duckfetch/actions/workflows/test-macos-install.yml/badge.svg)](https://github.com/PMassicotte/duckfetch/actions/workflows/test-macos-install.yml) [![Test Windows Installation](https://github.com/PMassicotte/duckfetch/actions/workflows/test-windos-install.yml/badge.svg)](https://github.com/PMassicotte/duckfetch/actions/workflows/test-windos-install.yml)
 
-A simple (**very experimental**) Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
+A simple Rust application to manage DuckDB installations, allowing users to list available versions and install specific versions easily.
 
 ## Table of Contents
 
@@ -91,7 +91,7 @@ duckfetch install --help
 To enable autocompletion, you can use the `completions` subcommand to generate the completion script for your shell. For example, to enable completions for the `zsh` shell:
 
 ```bash
-duckfetch completions zsh > ~/.zfunc/_duckfetch
+duckfetch completions zsh >~/.zfunc/_duckfetch
 ```
 
 Then, add the following line to your `.zshrc` file:
