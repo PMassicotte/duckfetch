@@ -456,7 +456,7 @@ dependencies = [
 
 [[package]]
 name = "duckfetch"
-version = "0.3.9"
+version = "0.3.5"
 dependencies = [
  "anyhow",
  "clap",
