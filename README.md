@@ -36,6 +36,10 @@ A simple Rust application to manage DuckDB installations, allowing users to list
 
 ## Installation
 
+You can install `duckfetch` using `cargo`, the Rust package manager, or by using the provided shell scripts.
+
+### Cargo
+
 To install it from crates.io:
 
 ```bash
@@ -46,6 +50,20 @@ Or the development version:
 
 ```bash
 cargo install --git https://github.com/pmassicotte/duckfetch
+```
+
+### Shell scripts
+
+Linux and MacOS:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf $(curl -s https://api.github.com/repos/pmassicotte/duckfetch/releases/latest | grep -o 'https://github.com/pmassicotte/duckfetch/releases/download/[^"]*-installer.sh') | sh
+```
+
+Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -c "$url = (Invoke-RestMethod -Uri 'https://api.github.com/repos/pmassicotte/duckfetch/releases/latest').assets | Where-Object { $_.name -eq 'duckfetch-installer.ps1' } | Select-Object -ExpandProperty browser_download_url; irm $url | iex"
 ```
 
 ## Usage
