@@ -22,8 +22,10 @@ jobs:
           duckfetch --version
 
       - name: Install DuckDB using duckfetch
+        env:
+          CI: true
+          GITHUB_ACTIONS: true
         run: |
           duckfetch update
           # Verify DuckDB is installed and executable
-          test -x ~/.local/bin/duckdb
           ~/.local/bin/duckdb --version
