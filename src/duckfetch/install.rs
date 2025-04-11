@@ -11,6 +11,11 @@ use std::fs;
 use std::path::Path;
 use std::path::PathBuf;
 
+/// Returns true if running in a non-interactive environment (CI or explicitly set)
+fn is_non_interactive() -> bool {
+    std::env::var("DUCKFETCH_NON_INTERACTIVE").is_ok()
+}
+
 /// Returns the appropriate destination directory for the DuckDB binary based on the operating system.
 ///
 /// On Windows, it uses `AppData\Local\bin` under the user's home directory.
@@ -136,25 +141,30 @@ pub fn install_duckdb(requested_release: &Release) -> Result<()> {
     // Determine the destination path based on the platform
     let dest_dir = get_dest_dir()?;
 
-    // Ask the user if the destination folder should be created
+    // Ask the user if the destination folder should be created if interactive mode
     if !dest_dir.exists() {
-        let answer = Confirm::new(&format!(
-            "{} does not exist. Would you like to create it?",
-            dest_dir.display()
-        ))
-        .with_default(false)
-        .with_help_message("Select 'yes' to create the folder")
-        .prompt()?;
-
-        if answer {
-            // Create the directory if the user agreed
+        if is_non_interactive() {
             fs::create_dir_all(&dest_dir)
                 .context(format!("Failed to create directory {}", dest_dir.display()))?;
-            println!("Directory {} created successfully.", dest_dir.display());
+            println!("Directory {} created automatically.", dest_dir.display());
         } else {
-            return Err(anyhow::anyhow!(
-                "Aborting installation as the destination directory was not created."
-            ));
+            let answer = Confirm::new(&format!(
+                "{} does not exist. Would you like to create it?",
+                dest_dir.display()
+            ))
+            .with_default(false)
+            .with_help_message("Select 'yes' to create the folder")
+            .prompt()?;
+
+            if answer {
+                fs::create_dir_all(&dest_dir)
+                    .context(format!("Failed to create directory {}", dest_dir.display()))?;
+                println!("Directory {} created successfully.", dest_dir.display());
+            } else {
+                return Err(anyhow::anyhow!(
+                    "Aborting installation as the destination directory was not created."
+                ));
+            }
         }
     }
 

@@ -23,8 +23,7 @@ jobs:
 
       - name: Install DuckDB using duckfetch
         env:
-          CI: true
-          GITHUB_ACTIONS: true
+          DUCKFETCH_NON_INTERACTIVE: true
         run: |
           duckfetch update
           # Verify DuckDB is installed and executable
