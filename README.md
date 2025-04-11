@@ -70,9 +70,9 @@ This command will print the available versions and ask the user to select one to
 duckfetch install
 ```
 
-### Open the change log of the latest version
+### Open the change log of the latest DuckDB version
 
-This will open the GitHub release page for the latest version in your default browser.
+This will open the GitHub release page for the latest DuckDB version in your default browser.
 
 ```bash
 duckfetch changelog
