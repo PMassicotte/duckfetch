@@ -12,6 +12,7 @@
 
 mod duckfetch;
 
+use anyhow::Ok;
 use duckfetch::artifacts::ArtifactsResponse;
 use duckfetch::build_cli;
 use duckfetch::check;
@@ -20,6 +21,7 @@ use duckfetch::duckdb_versions;
 use duckfetch::install_duckdb;
 
 use anyhow::{Context, Result};
+use duckfetch::version::installed_version;
 use duckfetch::version::latest_stable_release;
 
 fn main() -> Result<()> {
@@ -51,6 +53,14 @@ fn main() -> Result<()> {
         }
         Some(("update", _)) => {
             let latest_version = latest_stable_release()?;
+
+            if latest_version == installed_version()? {
+                println!(
+                    "The latest stable version is already installed ({}).",
+                    latest_version
+                );
+                return Ok(());
+            }
 
             let available_versions = duckdb_versions()?;
 
