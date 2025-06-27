@@ -43,7 +43,7 @@ pub fn build(tag_name: &str) -> String {
                 Platform::MacOs => "osx",
                 Platform::Windows => "windows",
             };
-            format!("{}{}.zip", NIGHTLY_URL, platform_suffix)
+            format!("{NIGHTLY_URL}{platform_suffix}.zip")
         }
     }
 }

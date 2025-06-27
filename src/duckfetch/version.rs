@@ -212,20 +212,14 @@ pub fn check() -> Result<()> {
             let latest_release = latest_stable_release()?;
 
             if installed_version == latest_release {
-                println!(
-                    "The latest stable release of DuckDB is installed ({})",
-                    latest_release
-                );
+                println!("The latest stable release of DuckDB is installed ({latest_release})");
             } else if installed_version.contains("dev") {
                 println!(
-                    "Nightly version installed: {}\nLatest stable version: {}",
-                    installed_version, latest_release
+                    "Nightly version installed: {installed_version}\nLatest stable version: {latest_release}",
                 );
             } else {
                 println!(
-                    "A newer version of DuckDB is available.\nInstalled version: {}\nLatest stable version: {}",
-                    installed_version,
-                    latest_release,
+                    "A newer version of DuckDB is available.\nInstalled version: {installed_version}\nLatest stable version: {latest_release}",
                 );
             }
         }

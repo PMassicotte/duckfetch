@@ -49,8 +49,7 @@ pub fn extract_cli(
     // the binary to use.
     else {
         let mut file_in_zip = archive.by_name(&target_zip).context(format!(
-            "The file '{}' was not found inside '{}'. It may not have been built yet.",
-            target_zip, downloaded_filename
+            "The file '{target_zip}' was not found inside '{downloaded_filename}'. It may not have been built yet.",
         ))?;
 
         let mut buffer = Vec::new();

@@ -55,10 +55,7 @@ fn main() -> Result<()> {
 
             if let Ok(current_version) = installed_version() {
                 if latest_version == current_version {
-                    println!(
-                        "The latest stable version is already installed ({}).",
-                        latest_version
-                    );
+                    println!("The latest stable version is already installed ({latest_version}).");
                     return Ok(());
                 }
             }
