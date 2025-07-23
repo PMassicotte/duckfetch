@@ -1,15 +1,15 @@
 [package]
 name = "duckfetch"
 version = "0.4.1"
-edition = "2021"
 authors = ["Philippe Massicotte <pmassicotte@hotmail.com>"]
+edition = "2021"
 description = "A CLI tool for managing DuckDB installations, enabling users to easily list available versions and install specific ones."
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/pmassicotte/duckfetch"
-homepage = "https://github.com/pmassicotte/duckfetch"
 documentation = "https://docs.rs/duckfetch"
 readme = "README.md"
-keywords = ["DuckDB", "database", "fetch", "CLI", "tool"]
+homepage = "https://github.com/pmassicotte/duckfetch"
+repository = "https://github.com/pmassicotte/duckfetch"
+license = "MIT OR Apache-2.0"
+keywords = ["CLI", "DuckDB", "database", "fetch", "tool"]
 categories = ["command-line-interface"]
 
 [dependencies]
@@ -27,10 +27,10 @@ zip = "2"
 
 [profile.release]
 opt-level = "z"
-lto = "fat"
-codegen-units = 1
-panic = "abort"
 strip = "symbols"
+lto = "fat"
+panic = "abort"
+codegen-units = 1
 
 [profile.dev]
 opt-level = 1
