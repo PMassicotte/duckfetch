@@ -106,13 +106,13 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     let url = "https://api.github.com/repos/duckdb/duckdb/releases";
     let client = Client::new();
 
-    // Set the User-Agent header
-    let response: Vec<Release> = client
-        .get(url)
-        .header("User-Agent", "duckfetch")
-        .send()
-        .context("Failed to send request")?
-        .json()?;
+    let mut request = client.get(url).header("User-Agent", "duckfetch");
+
+    if let Ok(token) = std::env::var("GITHUB_TOKEN") {
+        request = request.header("Authorization", format!("Bearer {}", token));
+    }
+
+    let response: Vec<Release> = request.send().context("Failed to send request")?.json()?;
 
     // Create a ReleaseCollection and populate it with the releases
     let mut release_collection = ReleaseCollection::new();
@@ -146,9 +146,13 @@ pub fn latest_stable_release() -> Result<String> {
 
     let client = Client::new();
 
-    let response = client
-        .get(url)
-        .header("User-Agent", "duckfetch")
+    let mut request = client.get(url).header("User-Agent", "duckfetch");
+
+    if let Ok(token) = std::env::var("GITHUB_TOKEN") {
+        request = request.header("Authorization", format!("Bearer {}", token));
+    }
+
+    let response = request
         .send()
         .context("Failed to send request")?
         .text()
@@ -156,7 +160,7 @@ pub fn latest_stable_release() -> Result<String> {
 
     let json: Value = serde_json::from_str(&response).context("Failed to parse JSON")?;
 
-    // FIX: Trying to find why it is not working on Mac on GA
+    // If the json as a message field, it means that there was an error
     if let Some(msg) = json.get("message") {
         return Err(anyhow!("GitHub API error: {}", msg));
     }

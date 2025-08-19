@@ -120,6 +120,23 @@ autoload -Uz compinit
 compinit -i
 ```
 
+## Troubleshooting
+
+### GitHub API Rate Limits
+
+If you encounter GitHub API rate limit errors (especially in CI/CD or with heavy usage), you can set a `GITHUB_TOKEN` environment variable to increase your rate limit:
+
+```bash
+export GITHUB_TOKEN=your_github_token_here
+duckfetch update
+```
+
+To create a GitHub token:
+
+1. Go to GitHub Settings → Developer settings → Personal access tokens
+2. Generate a new token (no special permissions needed for public repositories)
+3. Set the token as an environment variable
+
 ## Other related projects
 
 - https://github.com/NiclasHaderer/duckdb-version-manager

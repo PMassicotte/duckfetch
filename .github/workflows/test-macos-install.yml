@@ -32,6 +32,7 @@ jobs:
       - name: Install DuckDB using duckfetch
         env:
           DUCKFETCH_NON_INTERACTIVE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           duckfetch update
           ~/.local/bin/duckdb --version
