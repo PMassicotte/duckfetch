@@ -79,7 +79,6 @@ impl ReleaseCollection {
     }
 }
 
-// Implement IntoIterator for ReleaseCollection
 impl IntoIterator for ReleaseCollection {
     type Item = Release;
     type IntoIter = std::vec::IntoIter<Release>;
@@ -89,7 +88,6 @@ impl IntoIterator for ReleaseCollection {
     }
 }
 
-// Implement IntoIterator for a reference to ReleaseCollection (for borrowing)
 impl<'a> IntoIterator for &'a ReleaseCollection {
     type Item = &'a Release;
     type IntoIter = std::slice::Iter<'a, Release>;
