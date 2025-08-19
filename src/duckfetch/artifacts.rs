@@ -25,9 +25,15 @@ impl ArtifactsResponse {
         let client = Client::new();
         let url = "https://api.github.com/repos/duckdb/duckdb/actions/artifacts";
 
-        let response: ArtifactsResponse = client
+        let mut request = client
             .get(url)
-            .header(reqwest::header::USER_AGENT, "duckfetch")
+            .header(reqwest::header::USER_AGENT, "duckfetch");
+
+        if let Ok(token) = std::env::var("GITHUB_TOKEN") {
+            request = request.header(reqwest::header::AUTHORIZATION, format!("Bearer {}", token));
+        }
+
+        let response: ArtifactsResponse = request
             .send()
             .context("Failed to send request")?
             .json()?;
