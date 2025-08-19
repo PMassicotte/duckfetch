@@ -109,7 +109,7 @@ pub fn duckdb_versions() -> Result<ReleaseCollection> {
     let mut request = client.get(url).header("User-Agent", "duckfetch");
 
     if let Ok(token) = std::env::var("GITHUB_TOKEN") {
-        request = request.header("Authorization", format!("Bearer {}", token));
+        request = request.header("Authorization", format!("Bearer {token}"));
     }
 
     let response: Vec<Release> = request.send().context("Failed to send request")?.json()?;
@@ -149,7 +149,7 @@ pub fn latest_stable_release() -> Result<String> {
     let mut request = client.get(url).header("User-Agent", "duckfetch");
 
     if let Ok(token) = std::env::var("GITHUB_TOKEN") {
-        request = request.header("Authorization", format!("Bearer {}", token));
+        request = request.header("Authorization", format!("Bearer {token}"));
     }
 
     let response = request
