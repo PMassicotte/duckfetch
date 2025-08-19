@@ -1,6 +1,6 @@
 [package]
 name = "duckfetch"
-version = "0.4.1"
+version = "0.5.0"
 authors = ["Philippe Massicotte <pmassicotte@hotmail.com>"]
 edition = "2021"
 description = "A CLI tool for managing DuckDB installations, enabling users to easily list available versions and install specific ones."
