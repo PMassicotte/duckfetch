@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -155,6 +155,11 @@ pub fn latest_stable_release() -> Result<String> {
         .context("Failed to read response text")?;
 
     let json: Value = serde_json::from_str(&response).context("Failed to parse JSON")?;
+
+    // FIX: Trying to find why it is not working on Mac on GA
+    if let Some(msg) = json.get("message") {
+        return Err(anyhow!("GitHub API error: {}", msg));
+    }
 
     let version = json["tag_name"]
         .as_str()
