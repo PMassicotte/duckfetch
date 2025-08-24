@@ -30,13 +30,11 @@ impl ArtifactsResponse {
             .header(reqwest::header::USER_AGENT, "duckfetch");
 
         if let Ok(token) = std::env::var("GITHUB_TOKEN") {
-            request = request.header(reqwest::header::AUTHORIZATION, format!("Bearer {}", token));
+            request = request.header(reqwest::header::AUTHORIZATION, format!("Bearer {token}"));
         }
 
-        let response: ArtifactsResponse = request
-            .send()
-            .context("Failed to send request")?
-            .json()?;
+        let response: ArtifactsResponse =
+            request.send().context("Failed to send request")?.json()?;
 
         Ok(response)
     }
