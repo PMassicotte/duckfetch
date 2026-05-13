@@ -1,12 +1,12 @@
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::process::Command;
 use std::str;
 
-use crate::duckfetch::url;
 use crate::ArtifactsResponse;
+use crate::duckfetch::url;
 
 /// Represents a single release with a tag name and publication date.
 #[derive(Serialize, Deserialize, Debug)]

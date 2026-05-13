@@ -1,6 +1,6 @@
 use clap::Arg;
 use clap::ColorChoice;
-use clap::{command, Command};
+use clap::{Command, command};
 use clap_complete::Shell;
 
 /// Builds the command-line interface (CLI) for the DuckDB utility.

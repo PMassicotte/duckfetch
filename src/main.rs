@@ -53,11 +53,11 @@ fn main() -> Result<()> {
         Some(("update", _)) => {
             let latest_version = latest_stable_release()?;
 
-            if let Ok(current_version) = installed_version() {
-                if latest_version == current_version {
-                    println!("The latest stable version is already installed ({latest_version}).");
-                    return Ok(());
-                }
+            if let Ok(current_version) = installed_version()
+                && latest_version == current_version
+            {
+                println!("The latest stable version is already installed ({latest_version}).");
+                return Ok(());
             }
 
             let available_versions = duckdb_versions()?;

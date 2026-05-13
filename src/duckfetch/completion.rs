@@ -1,6 +1,6 @@
 use clap::Command;
 use clap_complete::Generator;
-use clap_complete::{generate, Shell};
+use clap_complete::{Shell, generate};
 use std::io;
 
 use crate::build_cli;
@@ -27,11 +27,11 @@ fn print_completions<G: Generator>(generator: G, cmd: &mut Command) {
 pub fn generate_completions() {
     let matches = build_cli().get_matches();
 
-    if let Some(subcommand_matches) = matches.subcommand_matches("completions") {
-        if let Some(generator) = subcommand_matches.get_one::<Shell>("shell").copied() {
-            let mut cmd = build_cli();
-            eprintln!("Generating completion file for {generator}...");
-            print_completions(generator, &mut cmd);
-        }
+    if let Some(subcommand_matches) = matches.subcommand_matches("completions")
+        && let Some(generator) = subcommand_matches.get_one::<Shell>("shell").copied()
+    {
+        let mut cmd = build_cli();
+        eprintln!("Generating completion file for {generator}...");
+        print_completions(generator, &mut cmd);
     }
 }
