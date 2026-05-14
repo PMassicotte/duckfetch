@@ -53,7 +53,15 @@
 
         # 🛠️ Dev shell
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = [ rustToolchain ];
+          nativeBuildInputs = [
+            rustToolchain
+            pkgs.cargo-dist
+          ];
+          shellHook = ''
+            mkdir -p .cargo/bin
+            ln -sf ${pkgs.cargo-dist}/bin/dist .cargo/bin/cargo-dist
+            export PATH=$PWD/.cargo/bin:$PATH
+          '';
         };
       }
     );
