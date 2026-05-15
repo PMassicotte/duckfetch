@@ -1,2 +1,4 @@
 /target
 TODO.md
+/.cargo/bin
+/.direnv
