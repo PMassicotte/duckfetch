@@ -10,6 +10,8 @@ use clap_complete::Shell;
 /// - `check`: Compares the installed version of DuckDB with the latest release.
 /// - `install`: Installs a specific version of DuckDB given a proposed list of releases.
 /// - `update`: Install the latest version of DuckDB.
+/// - `changelog`: Opens the release changelog of DuckDB in the default web browser.
+/// - `completions`: Generates autocompletion for a specified shell.
 ///
 /// # Returns
 ///
