@@ -1,7 +1,6 @@
 use anyhow::{Context, Result, anyhow};
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 use std::process::Command;
 use std::str;
 
@@ -20,6 +19,15 @@ pub struct Release {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ReleaseCollection {
     releases: Vec<Release>,
+}
+
+/// Represents the GitHub API response for the latest release, which is
+/// either a release payload or an error payload (e.g. rate limiting).
+#[derive(Deserialize, Debug)]
+#[serde(untagged)]
+enum LatestReleaseResponse {
+    Release { tag_name: String },
+    Error { message: String },
 }
 
 impl ReleaseCollection {
@@ -158,18 +166,13 @@ pub fn latest_stable_release() -> Result<String> {
         .text()
         .context("Failed to read response text")?;
 
-    let json: Value = serde_json::from_str(&response).context("Failed to parse JSON")?;
+    let parsed: LatestReleaseResponse =
+        serde_json::from_str(&response).context("Failed to parse JSON")?;
 
-    // If the json as a message field, it means that there was an error
-    if let Some(msg) = json.get("message") {
-        return Err(anyhow!("GitHub API error: {}", msg));
+    match parsed {
+        LatestReleaseResponse::Release { tag_name } => Ok(tag_name),
+        LatestReleaseResponse::Error { message } => Err(anyhow!("GitHub API error: {}", message)),
     }
-
-    let version = json["tag_name"]
-        .as_str()
-        .context("Could not find the 'tag_name' field in the response")?;
-
-    Ok(version.to_string())
 }
 
 /// Retrieves the installed version of DuckDB by executing the `duckdb --version` command.
